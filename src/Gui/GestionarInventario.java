@@ -2,9 +2,7 @@ package Gui;
 
 // @author andresbucarello
 
-import java.awt.Color;
 import EDD.Helpers;
-
 
 public class GestionarInventario extends javax.swing.JFrame {
     

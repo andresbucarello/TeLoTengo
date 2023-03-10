@@ -2,12 +2,8 @@ package Gui;
 
 // @author andresbucarello
 
-import java.awt.Color;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import EDD.Helpers;
-
 
 public class Checkout extends javax.swing.JFrame {
     

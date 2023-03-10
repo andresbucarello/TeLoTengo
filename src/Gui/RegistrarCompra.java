@@ -1,7 +1,7 @@
 package Gui;
 
 // @author andresbucarello
-import java.awt.Color;
+
 import EDD.Helpers;
 
 public class RegistrarCompra extends javax.swing.JFrame {

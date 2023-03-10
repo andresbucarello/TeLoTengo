@@ -2,10 +2,7 @@ package Gui;
 
 // @author andresbucarello
 
-import java.awt.Color;
-import java.awt.image.ColorModel;
 import EDD.Helpers;
-import javax.swing.JFrame;
 
 public class Menu extends javax.swing.JFrame {
     

@@ -2,10 +2,8 @@ package Gui;
 
 // @author andresbucarello
 
-import java.awt.Color;
 import javax.swing.JOptionPane;
 import EDD.Helpers;
-
 
 public class GestionVuelto extends javax.swing.JFrame {
     

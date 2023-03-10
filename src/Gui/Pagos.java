@@ -2,7 +2,6 @@ package Gui;
 
 // @author andresbucarello
 
-import java.awt.Color;
 import EDD.Helpers;
 
 public class Pagos extends javax.swing.JFrame {
@@ -205,7 +204,6 @@ public class Pagos extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Pagos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Pagos().setVisible(true);
