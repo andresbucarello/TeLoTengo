@@ -1,11 +1,16 @@
 package Gui;
 
 // @author andresbucarello
+import java.awt.Color;
+import EDD.Helpers;
 
 public class RegistrarCompra extends javax.swing.JFrame {
 
+    Helpers f = new Helpers();
+
     public RegistrarCompra() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     @SuppressWarnings("unchecked")
@@ -66,6 +71,8 @@ public class RegistrarCompra extends javax.swing.JFrame {
         textCheckout = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -74,12 +81,24 @@ public class RegistrarCompra extends javax.swing.JFrame {
         panelAtras.setBackground(new java.awt.Color(255, 255, 255));
         panelAtras.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        textAtras.setFont(new java.awt.Font("Courier New", 0, 24)); // NOI18N
+        textAtras.setFont(new java.awt.Font("Courier New", 1, 24)); // NOI18N
         textAtras.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         textAtras.setText("Atras");
+        textAtras.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        textAtras.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                textAtrasMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                textAtrasMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                textAtrasMouseExited(evt);
+            }
+        });
         panelAtras.add(textAtras, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 60));
 
-        jPanel1.add(panelAtras, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 110, 60));
+        jPanel1.add(panelAtras, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 100, 60));
 
         panelTituloProductos.setBackground(new java.awt.Color(195, 70, 176));
         panelTituloProductos.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -95,6 +114,7 @@ public class RegistrarCompra extends javax.swing.JFrame {
         panelChuche1.setBackground(new java.awt.Color(195, 70, 176));
 
         botonChuche1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cacaoPolvo.png"))); // NOI18N
+        botonChuche1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout panelChuche1Layout = new javax.swing.GroupLayout(panelChuche1);
         panelChuche1.setLayout(panelChuche1Layout);
@@ -118,6 +138,7 @@ public class RegistrarCompra extends javax.swing.JFrame {
         panelChuche2.setBackground(new java.awt.Color(195, 70, 176));
 
         botonChuche2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/carre.png"))); // NOI18N
+        botonChuche2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout panelChuche2Layout = new javax.swing.GroupLayout(panelChuche2);
         panelChuche2.setLayout(panelChuche2Layout);
@@ -141,6 +162,7 @@ public class RegistrarCompra extends javax.swing.JFrame {
         panelChuche3.setBackground(new java.awt.Color(195, 70, 176));
 
         botonChuche3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/charge.png"))); // NOI18N
+        botonChuche3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout panelChuche3Layout = new javax.swing.GroupLayout(panelChuche3);
         panelChuche3.setLayout(panelChuche3Layout);
@@ -164,6 +186,7 @@ public class RegistrarCompra extends javax.swing.JFrame {
         panelChuche4.setBackground(new java.awt.Color(195, 70, 176));
 
         botonChuche4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/chocolateLechepng.png"))); // NOI18N
+        botonChuche4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout panelChuche4Layout = new javax.swing.GroupLayout(panelChuche4);
         panelChuche4.setLayout(panelChuche4Layout);
@@ -187,6 +210,7 @@ public class RegistrarCompra extends javax.swing.JFrame {
         panelChuche5.setBackground(new java.awt.Color(195, 70, 176));
 
         botonChuche5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/chocolateTaza.png"))); // NOI18N
+        botonChuche5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout panelChuche5Layout = new javax.swing.GroupLayout(panelChuche5);
         panelChuche5.setLayout(panelChuche5Layout);
@@ -210,6 +234,7 @@ public class RegistrarCompra extends javax.swing.JFrame {
         panelChuche6.setBackground(new java.awt.Color(195, 70, 176));
 
         botonChuche6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/chokito.png"))); // NOI18N
+        botonChuche6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout panelChuche6Layout = new javax.swing.GroupLayout(panelChuche6);
         panelChuche6.setLayout(panelChuche6Layout);
@@ -233,6 +258,7 @@ public class RegistrarCompra extends javax.swing.JFrame {
         panelChuche7.setBackground(new java.awt.Color(195, 70, 176));
 
         botonChuche7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cocosette.png"))); // NOI18N
+        botonChuche7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout panelChuche7Layout = new javax.swing.GroupLayout(panelChuche7);
         panelChuche7.setLayout(panelChuche7Layout);
@@ -256,6 +282,7 @@ public class RegistrarCompra extends javax.swing.JFrame {
         panelChuche8.setBackground(new java.awt.Color(195, 70, 176));
 
         botonChuche8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cricri.png"))); // NOI18N
+        botonChuche8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout panelChuche8Layout = new javax.swing.GroupLayout(panelChuche8);
         panelChuche8.setLayout(panelChuche8Layout);
@@ -279,6 +306,7 @@ public class RegistrarCompra extends javax.swing.JFrame {
         panelChuche9.setBackground(new java.awt.Color(195, 70, 176));
 
         botonChuche9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/galak.png"))); // NOI18N
+        botonChuche9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout panelChuche9Layout = new javax.swing.GroupLayout(panelChuche9);
         panelChuche9.setLayout(panelChuche9Layout);
@@ -302,6 +330,7 @@ public class RegistrarCompra extends javax.swing.JFrame {
         panelChuche10.setBackground(new java.awt.Color(195, 70, 176));
 
         botonChuche10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/kitkat.png"))); // NOI18N
+        botonChuche10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout panelChuche10Layout = new javax.swing.GroupLayout(panelChuche10);
         panelChuche10.setLayout(panelChuche10Layout);
@@ -325,6 +354,7 @@ public class RegistrarCompra extends javax.swing.JFrame {
         panelChuche11.setBackground(new java.awt.Color(195, 70, 176));
 
         botonChuche11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/prestigio.png"))); // NOI18N
+        botonChuche11.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout panelChuche11Layout = new javax.swing.GroupLayout(panelChuche11);
         panelChuche11.setLayout(panelChuche11Layout);
@@ -348,6 +378,7 @@ public class RegistrarCompra extends javax.swing.JFrame {
         panelChuche12.setBackground(new java.awt.Color(195, 70, 176));
 
         botonChuche12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/rikiti.png"))); // NOI18N
+        botonChuche12.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout panelChuche12Layout = new javax.swing.GroupLayout(panelChuche12);
         panelChuche12.setLayout(panelChuche12Layout);
@@ -371,6 +402,7 @@ public class RegistrarCompra extends javax.swing.JFrame {
         panelChuche13.setBackground(new java.awt.Color(195, 70, 176));
 
         botonChuche13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/samba.png"))); // NOI18N
+        botonChuche13.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout panelChuche13Layout = new javax.swing.GroupLayout(panelChuche13);
         panelChuche13.setLayout(panelChuche13Layout);
@@ -394,6 +426,7 @@ public class RegistrarCompra extends javax.swing.JFrame {
         panelChuche14.setBackground(new java.awt.Color(195, 70, 176));
 
         botonChuche14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/susy.png"))); // NOI18N
+        botonChuche14.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout panelChuche14Layout = new javax.swing.GroupLayout(panelChuche14);
         panelChuche14.setLayout(panelChuche14Layout);
@@ -417,6 +450,7 @@ public class RegistrarCompra extends javax.swing.JFrame {
         panelChuche15.setBackground(new java.awt.Color(195, 70, 176));
 
         botonChuche15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/toronto.png"))); // NOI18N
+        botonChuche15.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout panelChuche15Layout = new javax.swing.GroupLayout(panelChuche15);
         panelChuche15.setLayout(panelChuche15Layout);
@@ -500,9 +534,21 @@ public class RegistrarCompra extends javax.swing.JFrame {
         panelVaciar.setBackground(new java.awt.Color(255, 255, 255));
         panelVaciar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        textVaciar.setFont(new java.awt.Font("Courier New", 0, 24)); // NOI18N
+        textVaciar.setFont(new java.awt.Font("Courier New", 1, 24)); // NOI18N
         textVaciar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         textVaciar.setText("Vaciar");
+        textVaciar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        textVaciar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                textVaciarMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                textVaciarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                textVaciarMouseExited(evt);
+            }
+        });
         panelVaciar.add(textVaciar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 150, 40));
 
         jPanel1.add(panelVaciar, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 790, 150, 40));
@@ -510,20 +556,68 @@ public class RegistrarCompra extends javax.swing.JFrame {
         panelCheckout.setBackground(new java.awt.Color(255, 255, 255));
         panelCheckout.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        textCheckout.setFont(new java.awt.Font("Courier New", 0, 24)); // NOI18N
+        textCheckout.setFont(new java.awt.Font("Courier New", 1, 24)); // NOI18N
         textCheckout.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         textCheckout.setText("Checkout");
+        textCheckout.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        textCheckout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                textCheckoutMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                textCheckoutMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                textCheckoutMouseExited(evt);
+            }
+        });
         panelCheckout.add(textCheckout, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 150, 40));
 
         jPanel1.add(panelCheckout, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 790, 150, 40));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 950, 850));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 950, 840));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void textAtrasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textAtrasMouseEntered
+        f.entrarRetroceder(textAtras, panelAtras);
+    }//GEN-LAST:event_textAtrasMouseEntered
+
+    private void textAtrasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textAtrasMouseExited
+        f.salirRetroceder(textAtras, panelAtras);
+    }//GEN-LAST:event_textAtrasMouseExited
+
+    private void textAtrasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textAtrasMouseClicked
+        f.volverMenu(this);
+    }//GEN-LAST:event_textAtrasMouseClicked
+
+    private void textVaciarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textVaciarMouseEntered
+        f.entrarRetroceder(textVaciar, panelVaciar);
+    }//GEN-LAST:event_textVaciarMouseEntered
+
+    private void textVaciarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textVaciarMouseExited
+        f.salirRetroceder(textVaciar, panelVaciar);
+    }//GEN-LAST:event_textVaciarMouseExited
+
+    private void textVaciarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textVaciarMouseClicked
+        // vaciar();
+    }//GEN-LAST:event_textVaciarMouseClicked
+
+    private void textCheckoutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textCheckoutMouseEntered
+        f.entrarBoton(textCheckout, panelCheckout);
+    }//GEN-LAST:event_textCheckoutMouseEntered
+
+    private void textCheckoutMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textCheckoutMouseExited
+        f.salirBoton(textCheckout, panelCheckout);
+    }//GEN-LAST:event_textCheckoutMouseExited
+
+    private void textCheckoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textCheckoutMouseClicked
+        f.irCheckout(this);
+    }//GEN-LAST:event_textCheckoutMouseClicked
+
     public static void main(String args[]) {
-        
+
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -544,6 +638,7 @@ public class RegistrarCompra extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(RegistrarCompra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         java.awt.EventQueue.invokeLater(new Runnable() {

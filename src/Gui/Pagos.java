@@ -2,10 +2,16 @@ package Gui;
 
 // @author andresbucarello
 
-public class Pagos extends javax.swing.JFrame {
+import java.awt.Color;
+import EDD.Helpers;
 
+public class Pagos extends javax.swing.JFrame {
+    
+    Helpers f = new Helpers();
+    
     public Pagos() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     @SuppressWarnings("unchecked")
@@ -16,21 +22,23 @@ public class Pagos extends javax.swing.JFrame {
         panelTitulo = new javax.swing.JPanel();
         textTitulo = new javax.swing.JLabel();
         panelAtras = new javax.swing.JPanel();
-        textAtras1 = new javax.swing.JLabel();
+        textAtras = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        textAtras = new javax.swing.JLabel();
-        textAtras2 = new javax.swing.JLabel();
+        textZelle = new javax.swing.JLabel();
+        textPagoMovil = new javax.swing.JLabel();
+        textEfectivoBs = new javax.swing.JLabel();
+        efectivoBs = new javax.swing.JLabel();
+        textPunto = new javax.swing.JLabel();
+        punto = new javax.swing.JLabel();
+        textEfectivoUSD = new javax.swing.JLabel();
+        efectivoUSD = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
-        tituloNombre1 = new javax.swing.JLabel();
-        tituloNombre2 = new javax.swing.JLabel();
-        textAtras3 = new javax.swing.JLabel();
-        textAtras4 = new javax.swing.JLabel();
-        textAtras5 = new javax.swing.JLabel();
-        tituloNombre3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -50,12 +58,24 @@ public class Pagos extends javax.swing.JFrame {
         panelAtras.setBackground(new java.awt.Color(255, 255, 255));
         panelAtras.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        textAtras1.setFont(new java.awt.Font("Courier New", 0, 24)); // NOI18N
-        textAtras1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        textAtras1.setText("Atras");
-        panelAtras.add(textAtras1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 60));
+        textAtras.setFont(new java.awt.Font("Courier New", 1, 24)); // NOI18N
+        textAtras.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        textAtras.setText("Atras");
+        textAtras.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        textAtras.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                textAtrasMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                textAtrasMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                textAtrasMouseExited(evt);
+            }
+        });
+        panelAtras.add(textAtras, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 60));
 
-        jPanel1.add(panelAtras, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 110, 60));
+        jPanel1.add(panelAtras, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 100, 60));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -78,19 +98,49 @@ public class Pagos extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 310, 340));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 320, 340));
 
-        textAtras.setFont(new java.awt.Font("Courier New", 1, 24)); // NOI18N
-        textAtras.setForeground(new java.awt.Color(195, 70, 176));
-        textAtras.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        textAtras.setText("Efectivo USD:");
-        jPanel1.add(textAtras, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 520, 260, 40));
+        textZelle.setFont(new java.awt.Font("Courier New", 1, 24)); // NOI18N
+        textZelle.setForeground(new java.awt.Color(195, 70, 176));
+        textZelle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        textZelle.setText("Zelle");
+        jPanel1.add(textZelle, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 310, 40));
 
-        textAtras2.setFont(new java.awt.Font("Courier New", 1, 24)); // NOI18N
-        textAtras2.setForeground(new java.awt.Color(195, 70, 176));
-        textAtras2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        textAtras2.setText("Pago Movil");
-        jPanel1.add(textAtras2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 90, 310, 40));
+        textPagoMovil.setFont(new java.awt.Font("Courier New", 1, 24)); // NOI18N
+        textPagoMovil.setForeground(new java.awt.Color(195, 70, 176));
+        textPagoMovil.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        textPagoMovil.setText("Pago Movil");
+        jPanel1.add(textPagoMovil, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 90, 310, 40));
+
+        textEfectivoBs.setFont(new java.awt.Font("Courier New", 1, 24)); // NOI18N
+        textEfectivoBs.setForeground(new java.awt.Color(195, 70, 176));
+        textEfectivoBs.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        textEfectivoBs.setText("Efectivo Bs:");
+        jPanel1.add(textEfectivoBs, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 480, 260, 40));
+
+        efectivoBs.setFont(new java.awt.Font("Courier New", 0, 24)); // NOI18N
+        efectivoBs.setText("0");
+        jPanel1.add(efectivoBs, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 480, 150, 40));
+
+        textPunto.setFont(new java.awt.Font("Courier New", 1, 24)); // NOI18N
+        textPunto.setForeground(new java.awt.Color(195, 70, 176));
+        textPunto.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        textPunto.setText("Punto:");
+        jPanel1.add(textPunto, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 480, 200, 40));
+
+        punto.setFont(new java.awt.Font("Courier New", 0, 24)); // NOI18N
+        punto.setText("0");
+        jPanel1.add(punto, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 480, 160, 40));
+
+        textEfectivoUSD.setFont(new java.awt.Font("Courier New", 1, 24)); // NOI18N
+        textEfectivoUSD.setForeground(new java.awt.Color(195, 70, 176));
+        textEfectivoUSD.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        textEfectivoUSD.setText("Efectivo USD:");
+        jPanel1.add(textEfectivoUSD, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 520, 260, 40));
+
+        efectivoUSD.setFont(new java.awt.Font("Courier New", 0, 24)); // NOI18N
+        efectivoUSD.setText("0");
+        jPanel1.add(efectivoUSD, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 520, 150, 40));
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -113,42 +163,24 @@ public class Pagos extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jTable2);
 
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 130, 310, 340));
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 130, 320, 340));
 
-        tituloNombre1.setFont(new java.awt.Font("Courier New", 0, 24)); // NOI18N
-        tituloNombre1.setText("0");
-        jPanel1.add(tituloNombre1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 520, 150, 40));
-
-        tituloNombre2.setFont(new java.awt.Font("Courier New", 0, 24)); // NOI18N
-        tituloNombre2.setText("0");
-        jPanel1.add(tituloNombre2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 480, 150, 40));
-
-        textAtras3.setFont(new java.awt.Font("Courier New", 1, 24)); // NOI18N
-        textAtras3.setForeground(new java.awt.Color(195, 70, 176));
-        textAtras3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        textAtras3.setText("Zelle");
-        jPanel1.add(textAtras3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 310, 40));
-
-        textAtras4.setFont(new java.awt.Font("Courier New", 1, 24)); // NOI18N
-        textAtras4.setForeground(new java.awt.Color(195, 70, 176));
-        textAtras4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        textAtras4.setText("Efectivo Bs:");
-        jPanel1.add(textAtras4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 480, 260, 40));
-
-        textAtras5.setFont(new java.awt.Font("Courier New", 1, 24)); // NOI18N
-        textAtras5.setForeground(new java.awt.Color(195, 70, 176));
-        textAtras5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        textAtras5.setText("Punto:");
-        jPanel1.add(textAtras5, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 480, 200, 40));
-
-        tituloNombre3.setFont(new java.awt.Font("Courier New", 0, 24)); // NOI18N
-        tituloNombre3.setText("0");
-        jPanel1.add(tituloNombre3, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 480, 160, 40));
-
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, -1));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 740, 580));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void textAtrasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textAtrasMouseEntered
+        f.entrarRetroceder(textAtras, panelAtras);
+    }//GEN-LAST:event_textAtrasMouseEntered
+
+    private void textAtrasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textAtrasMouseExited
+        f.salirRetroceder(textAtras, panelAtras);
+    }//GEN-LAST:event_textAtrasMouseExited
+
+    private void textAtrasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textAtrasMouseClicked
+        f.volverMenu(this);
+    }//GEN-LAST:event_textAtrasMouseClicked
 
     public static void main(String args[]) {
         
@@ -173,13 +205,6 @@ public class Pagos extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Pagos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -189,6 +214,8 @@ public class Pagos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel efectivoBs;
+    private javax.swing.JLabel efectivoUSD;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -196,16 +223,14 @@ public class Pagos extends javax.swing.JFrame {
     private javax.swing.JTable jTable2;
     private javax.swing.JPanel panelAtras;
     private javax.swing.JPanel panelTitulo;
+    private javax.swing.JLabel punto;
     private javax.swing.JLabel textAtras;
-    private javax.swing.JLabel textAtras1;
-    private javax.swing.JLabel textAtras2;
-    private javax.swing.JLabel textAtras3;
-    private javax.swing.JLabel textAtras4;
-    private javax.swing.JLabel textAtras5;
+    private javax.swing.JLabel textEfectivoBs;
+    private javax.swing.JLabel textEfectivoUSD;
+    private javax.swing.JLabel textPagoMovil;
+    private javax.swing.JLabel textPunto;
     private javax.swing.JLabel textTitulo;
-    private javax.swing.JLabel tituloNombre1;
-    private javax.swing.JLabel tituloNombre2;
-    private javax.swing.JLabel tituloNombre3;
+    private javax.swing.JLabel textZelle;
     // End of variables declaration//GEN-END:variables
 
 }
