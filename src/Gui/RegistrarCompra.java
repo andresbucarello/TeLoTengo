@@ -1,16 +1,52 @@
 package Gui;
 
 // @author andresbucarello
-
+import EDD.EfectivoBs;
+import EDD.EfectivoUSD;
 import EDD.Helpers;
+import EDD.ListaPagoMovil;
+import EDD.ListaProductos;
+import EDD.ListaZelle;
+import EDD.Producto;
+import EDD.Punto;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class RegistrarCompra extends javax.swing.JFrame {
 
+    static JFrame frame;
+    static ListaProductos productos;
+    static ListaZelle zelles;
+    static ListaPagoMovil pagosMoviles;
+    static Punto pagosPuntos;
+    static EfectivoUSD efectivoUSD;
+    static EfectivoBs efectivoBs;
+
+    private Producto productoSeleccionado;
+    private float tasa;
+
+    DefaultTableModel modelo = new DefaultTableModel();
     Helpers f = new Helpers();
 
-    public RegistrarCompra() {
+    public RegistrarCompra(JFrame frame, ListaProductos lista_productos, ListaZelle listaZelle, ListaPagoMovil listaPagoMovil, Punto montoPunto, EfectivoUSD montoEfectivoUSD, EfectivoBs montoEfectivoBs) {
         initComponents();
         this.setLocationRelativeTo(null);
+
+        this.tasa = 24.61f;
+
+        this.frame = frame;
+        this.productos = lista_productos;
+        this.zelles = listaZelle;
+        this.pagosMoviles = listaPagoMovil;
+        this.pagosPuntos = montoPunto;
+        this.efectivoUSD = montoEfectivoUSD;
+        this.efectivoBs = montoEfectivoBs;
+
+        modelo.addColumn("Producto");
+        modelo.addColumn("Cantidad");
+        modelo.addColumn("Precio");
+        carrito.setModel(modelo);
     }
 
     @SuppressWarnings("unchecked")
@@ -55,8 +91,6 @@ public class RegistrarCompra extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         panelTituloCompra = new javax.swing.JPanel();
         textTituloCompra = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        listaCompra = new javax.swing.JList<>();
         textSubtotal = new javax.swing.JLabel();
         Subtotal = new javax.swing.JLabel();
         textIVA = new javax.swing.JLabel();
@@ -69,6 +103,8 @@ public class RegistrarCompra extends javax.swing.JFrame {
         textVaciar = new javax.swing.JLabel();
         panelCheckout = new javax.swing.JPanel();
         textCheckout = new javax.swing.JLabel();
+        scrollPane = new javax.swing.JScrollPane();
+        carrito = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -113,7 +149,7 @@ public class RegistrarCompra extends javax.swing.JFrame {
 
         panelChuche1.setBackground(new java.awt.Color(195, 70, 176));
 
-        botonChuche1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cacaoPolvo.png"))); // NOI18N
+        botonChuche1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/doritos.png"))); // NOI18N
         botonChuche1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonChuche1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -148,7 +184,7 @@ public class RegistrarCompra extends javax.swing.JFrame {
 
         panelChuche2.setBackground(new java.awt.Color(195, 70, 176));
 
-        botonChuche2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/carre.png"))); // NOI18N
+        botonChuche2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/deTodito.png"))); // NOI18N
         botonChuche2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonChuche2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -183,7 +219,7 @@ public class RegistrarCompra extends javax.swing.JFrame {
 
         panelChuche3.setBackground(new java.awt.Color(195, 70, 176));
 
-        botonChuche3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/charge.png"))); // NOI18N
+        botonChuche3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/platanitos.png"))); // NOI18N
         botonChuche3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonChuche3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -218,7 +254,7 @@ public class RegistrarCompra extends javax.swing.JFrame {
 
         panelChuche4.setBackground(new java.awt.Color(195, 70, 176));
 
-        botonChuche4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/chocolateLechepng.png"))); // NOI18N
+        botonChuche4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bigBom.png"))); // NOI18N
         botonChuche4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonChuche4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -253,7 +289,7 @@ public class RegistrarCompra extends javax.swing.JFrame {
 
         panelChuche5.setBackground(new java.awt.Color(195, 70, 176));
 
-        botonChuche5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/chocolateTaza.png"))); // NOI18N
+        botonChuche5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/trululu.png"))); // NOI18N
         botonChuche5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonChuche5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -288,7 +324,7 @@ public class RegistrarCompra extends javax.swing.JFrame {
 
         panelChuche6.setBackground(new java.awt.Color(195, 70, 176));
 
-        botonChuche6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/chokito.png"))); // NOI18N
+        botonChuche6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/chocolateLechepng.png"))); // NOI18N
         botonChuche6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonChuche6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -323,7 +359,7 @@ public class RegistrarCompra extends javax.swing.JFrame {
 
         panelChuche7.setBackground(new java.awt.Color(195, 70, 176));
 
-        botonChuche7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cocosette.png"))); // NOI18N
+        botonChuche7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cricri.png"))); // NOI18N
         botonChuche7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonChuche7.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -358,7 +394,7 @@ public class RegistrarCompra extends javax.swing.JFrame {
 
         panelChuche8.setBackground(new java.awt.Color(195, 70, 176));
 
-        botonChuche8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cricri.png"))); // NOI18N
+        botonChuche8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/rikiti.png"))); // NOI18N
         botonChuche8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonChuche8.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -428,7 +464,7 @@ public class RegistrarCompra extends javax.swing.JFrame {
 
         panelChuche10.setBackground(new java.awt.Color(195, 70, 176));
 
-        botonChuche10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/kitkat.png"))); // NOI18N
+        botonChuche10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/pringles.png"))); // NOI18N
         botonChuche10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonChuche10.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -463,7 +499,7 @@ public class RegistrarCompra extends javax.swing.JFrame {
 
         panelChuche11.setBackground(new java.awt.Color(195, 70, 176));
 
-        botonChuche11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/prestigio.png"))); // NOI18N
+        botonChuche11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/nescafe.png"))); // NOI18N
         botonChuche11.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonChuche11.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -498,7 +534,7 @@ public class RegistrarCompra extends javax.swing.JFrame {
 
         panelChuche12.setBackground(new java.awt.Color(195, 70, 176));
 
-        botonChuche12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/rikiti.png"))); // NOI18N
+        botonChuche12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cocosette.png"))); // NOI18N
         botonChuche12.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonChuche12.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -533,7 +569,7 @@ public class RegistrarCompra extends javax.swing.JFrame {
 
         panelChuche13.setBackground(new java.awt.Color(195, 70, 176));
 
-        botonChuche13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/samba.png"))); // NOI18N
+        botonChuche13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/carre.png"))); // NOI18N
         botonChuche13.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonChuche13.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -568,7 +604,7 @@ public class RegistrarCompra extends javax.swing.JFrame {
 
         panelChuche14.setBackground(new java.awt.Color(195, 70, 176));
 
-        botonChuche14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/susy.png"))); // NOI18N
+        botonChuche14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/oreo.png"))); // NOI18N
         botonChuche14.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonChuche14.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -603,7 +639,7 @@ public class RegistrarCompra extends javax.swing.JFrame {
 
         panelChuche15.setBackground(new java.awt.Color(195, 70, 176));
 
-        botonChuche15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/toronto.png"))); // NOI18N
+        botonChuche15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/otros.png"))); // NOI18N
         botonChuche15.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonChuche15.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -650,15 +686,6 @@ public class RegistrarCompra extends javax.swing.JFrame {
         panelTituloCompra.add(textTituloCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 350, 60));
 
         jPanel1.add(panelTituloCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 10, 350, 60));
-
-        listaCompra.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(listaCompra);
-
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 80, 350, 580));
 
         textSubtotal.setFont(new java.awt.Font("Courier New", 0, 18)); // NOI18N
         textSubtotal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -740,10 +767,103 @@ public class RegistrarCompra extends javax.swing.JFrame {
 
         jPanel1.add(panelCheckout, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 770, 150, 40));
 
+        carrito.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        scrollPane.setViewportView(carrito);
+
+        jPanel1.add(scrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 80, 350, 580));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 950, 820));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void seleccionProducto(String name, ListaProductos lista_productos) {
+        productoSeleccionado = f.buscarProducto(name, lista_productos);
+        int cantidad;
+        if (productoSeleccionado.getCantidad() == 0) {
+            JOptionPane.showMessageDialog(null, " ERROR! EL PRODUCTO YA NO SE ENCUENTRA DISPONIBLE ");
+            return;
+        }
+        do {
+            String num = JOptionPane.showInputDialog(null, " Ingrese la cantidad de " + productoSeleccionado.getNombre() + " que desea: ");
+            cantidad = f.validarInt(num);
+            if (!validarCantidad(cantidad, productoSeleccionado)) {
+                JOptionPane.showMessageDialog(null, " ERROR! LA CANTIDAD ES MAYOR AL INVENTARIO DISPONIBLE ");
+                cantidad = 0;
+            }
+        } while (cantidad == 0);
+        productoSeleccionado.setCantidad(productoSeleccionado.getCantidad() - cantidad);
+        Object[] datos = new Object[3];
+        datos[0] = productoSeleccionado.getNombre();
+        datos[1] = cantidad;
+        datos[2] = productoSeleccionado.getPrecio();
+        modelo.addRow(datos);
+//        float numero1 = 19.5f; // o float numero = (float)19.5;
+        float ttlUSD = Float.parseFloat(totalUSD.getText());
+        ttlUSD += productoSeleccionado.getPrecio() * cantidad;
+        String ttl = String.valueOf((double)Math.round((double) ttlUSD * 100d)/100);
+        ttlUSD = Float.parseFloat(ttl);
+        
+        totalUSD.setText(Float.toString(ttlUSD));
+        
+        float ttlBs = ttlUSD * tasa;
+        String tlbs = String.valueOf((double)Math.round((double) ttlBs * 100d)/100);
+        ttlBs = Float.parseFloat(tlbs);
+        
+        totalBs.setText(Float.toString(ttlBs));
+        float impuesto = ttlUSD * 0.16f;
+        IVA.setText(Float.toString(impuesto));
+        float subttl = ttlUSD - impuesto;
+        Subtotal.setText(Float.toString(subttl));
+    }
+
+    private boolean validarCantidad(int cantidad, Producto productoSelected) {
+        if (cantidad > productoSelected.getCantidad()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private void llenar(String nombre, int cantidad, ListaProductos lista_productos) {
+        Producto producto = f.buscarProducto(nombre, lista_productos);
+        producto.setCantidad(producto.getCantidad() + cantidad);
+    }
+
+    private void vaciar(ListaProductos lista_productos) {
+        if (carrito.getRowCount() > 0) {
+            DefaultTableModel tm = (DefaultTableModel) carrito.getModel();
+            System.out.println(carrito.getRowCount());
+            int i = 0;
+            while (i < carrito.getRowCount()) {
+                String nombre = String.valueOf(tm.getValueAt(i, 0));
+                int cantidad = Integer.parseInt(String.valueOf(tm.getValueAt(i, 1)));
+                llenar(nombre, cantidad, lista_productos);
+                i++;
+            }
+            
+            float ttlUSD = 0;
+            totalUSD.setText(Float.toString(ttlUSD));
+            float ttlBs = ttlUSD * tasa;
+            totalBs.setText(Float.toString(ttlBs));
+            float impuesto = ttlUSD * 0.16f;
+            IVA.setText(Float.toString(impuesto));
+            float subttl = ttlUSD - impuesto;
+            Subtotal.setText(Float.toString(subttl));
+            modelo.getDataVector().removeAllElements();
+            carrito.updateUI();
+        }
+    }
 
     private void textAtrasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textAtrasMouseEntered
         f.entrarRetroceder(textAtras, panelAtras);
@@ -754,7 +874,10 @@ public class RegistrarCompra extends javax.swing.JFrame {
     }//GEN-LAST:event_textAtrasMouseExited
 
     private void textAtrasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textAtrasMouseClicked
-        f.volverMenu(this);
+        vaciar(productos);
+        System.out.println();
+        this.setVisible(false);
+        this.frame.setVisible(true);
     }//GEN-LAST:event_textAtrasMouseClicked
 
     private void textVaciarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textVaciarMouseEntered
@@ -766,7 +889,8 @@ public class RegistrarCompra extends javax.swing.JFrame {
     }//GEN-LAST:event_textVaciarMouseExited
 
     private void textVaciarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textVaciarMouseClicked
-        // vaciar();
+        vaciar(productos);
+
     }//GEN-LAST:event_textVaciarMouseClicked
 
     private void textCheckoutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textCheckoutMouseEntered
@@ -777,8 +901,15 @@ public class RegistrarCompra extends javax.swing.JFrame {
         f.salirBoton(textCheckout, panelCheckout);
     }//GEN-LAST:event_textCheckoutMouseExited
 
+    // VERIFICADO
     private void textCheckoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textCheckoutMouseClicked
-        f.irCheckout(this);
+        if (Float.parseFloat(totalUSD.getText()) > 0) {
+            float ttlBs = Float.parseFloat(totalBs.getText());
+            float ttlUSD = Float.parseFloat(totalUSD.getText());
+            f.irCheckout(this, ttlBs, ttlUSD, tasa, zelles, pagosMoviles, pagosPuntos, efectivoUSD, efectivoBs, productos);
+        } else {
+            JOptionPane.showMessageDialog(null, " ERROR! Debe ingreesar al menos un producto ");
+        }
     }//GEN-LAST:event_textCheckoutMouseClicked
 
     private void botonChuche1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonChuche1MouseEntered
@@ -790,7 +921,19 @@ public class RegistrarCompra extends javax.swing.JFrame {
     }//GEN-LAST:event_botonChuche1MouseExited
 
     private void botonChuche1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonChuche1MouseClicked
-        // TODO add your handling code here:
+        if (f.validacion()) {
+            String name;
+            String[] array = {" Pepito ", " Cheese Tris ", " Doritos "};
+            int opcion = JOptionPane.showOptionDialog(null, "¿Cual desea?", "Seleciona...", 0, JOptionPane.QUESTION_MESSAGE, null, array, null);
+            if (opcion == 2) {
+                name = "Doritos";
+            } else if (opcion == 1) {
+                name = "Chesee Tris";
+            } else {
+                name = "Pepito";
+            }
+            seleccionProducto(name, productos);
+        }
     }//GEN-LAST:event_botonChuche1MouseClicked
 
     private void botonChuche2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonChuche2MouseEntered
@@ -802,7 +945,10 @@ public class RegistrarCompra extends javax.swing.JFrame {
     }//GEN-LAST:event_botonChuche2MouseExited
 
     private void botonChuche2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonChuche2MouseClicked
-        // TODO add your handling code here:
+        if (f.validacion()) {
+            String name = "De Todito";
+            seleccionProducto(name, productos);
+        }
     }//GEN-LAST:event_botonChuche2MouseClicked
 
     private void botonChuche3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonChuche3MouseEntered
@@ -814,11 +960,17 @@ public class RegistrarCompra extends javax.swing.JFrame {
     }//GEN-LAST:event_botonChuche3MouseExited
 
     private void botonChuche3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonChuche3MouseClicked
-        // TODO add your handling code here:
+        if (f.validacion()) {
+            String name = "Platanitos";
+            seleccionProducto(name, productos);
+        }
     }//GEN-LAST:event_botonChuche3MouseClicked
 
     private void botonChuche4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonChuche4MouseClicked
-        // TODO add your handling code here:
+        if (f.validacion()) {
+            String name = "Big Bom";
+            seleccionProducto(name, productos);
+        }
     }//GEN-LAST:event_botonChuche4MouseClicked
 
     private void botonChuche4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonChuche4MouseEntered
@@ -838,7 +990,10 @@ public class RegistrarCompra extends javax.swing.JFrame {
     }//GEN-LAST:event_botonChuche5MouseExited
 
     private void botonChuche5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonChuche5MouseClicked
-        // TODO add your handling code here:
+        if (f.validacion()) {
+            String name = "Trululu";
+            seleccionProducto(name, productos);
+        }
     }//GEN-LAST:event_botonChuche5MouseClicked
 
     private void botonChuche6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonChuche6MouseEntered
@@ -850,7 +1005,20 @@ public class RegistrarCompra extends javax.swing.JFrame {
     }//GEN-LAST:event_botonChuche6MouseExited
 
     private void botonChuche6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonChuche6MouseClicked
-        // TODO add your handling code here:
+        if (f.validacion()) {
+            String name;
+            String[] array = {" 130gr ", " 70gr ", " 30gr "};
+            int opcion = JOptionPane.showOptionDialog(null, "¿Cual desea?", "Seleciona...", 0, JOptionPane.QUESTION_MESSAGE, null, array, null);
+            if (opcion == 2) {
+                System.out.println("HOLAAS");
+                name = "Chocolate de Leche 30gr";
+            } else if (opcion == 1) {
+                name = "Chocolate de Leche 70gr";
+            } else {
+                name = "Chocolate de Leche 130gr";
+            }
+            seleccionProducto(name, productos);
+        }
     }//GEN-LAST:event_botonChuche6MouseClicked
 
     private void botonChuche7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonChuche7MouseEntered
@@ -862,7 +1030,17 @@ public class RegistrarCompra extends javax.swing.JFrame {
     }//GEN-LAST:event_botonChuche7MouseExited
 
     private void botonChuche7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonChuche7MouseClicked
-        // TODO add your handling code here:
+        if (f.validacion()) {
+            String name;
+            String[] array = {" 123gr ", " 27gr "};
+            int opcion = JOptionPane.showOptionDialog(null, "¿Cual desea?", "Seleciona...", 0, JOptionPane.QUESTION_MESSAGE, null, array, null);
+            if (opcion == 1) {
+                name = "Cri-Cri 27gr";
+            } else {
+                name = "Cri-Cri 123gr";
+            }
+            seleccionProducto(name, productos);
+        }
     }//GEN-LAST:event_botonChuche7MouseClicked
 
     private void botonChuche8MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonChuche8MouseEntered
@@ -874,7 +1052,17 @@ public class RegistrarCompra extends javax.swing.JFrame {
     }//GEN-LAST:event_botonChuche8MouseExited
 
     private void botonChuche8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonChuche8MouseClicked
-        // TODO add your handling code here:
+        if (f.validacion()) {
+            String name;
+            String[] array = {" 130gr ", " 30gr "};
+            int opcion = JOptionPane.showOptionDialog(null, "¿Cual desea?", "Seleciona...", 0, JOptionPane.QUESTION_MESSAGE, null, array, null);
+            if (opcion == 1) {
+                name = "Rikiti 30gr";
+            } else {
+                name = "Rikiti 130gr";
+            }
+            seleccionProducto(name, productos);
+        }
     }//GEN-LAST:event_botonChuche8MouseClicked
 
     private void botonChuche9MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonChuche9MouseEntered
@@ -886,7 +1074,17 @@ public class RegistrarCompra extends javax.swing.JFrame {
     }//GEN-LAST:event_botonChuche9MouseExited
 
     private void botonChuche9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonChuche9MouseClicked
-        // TODO add your handling code here:
+        if (f.validacion()) {
+            String name;
+            String[] array = {" 130gr ", " 30gr "};
+            int opcion = JOptionPane.showOptionDialog(null, "¿Cual desea?", "Seleciona...", 0, JOptionPane.QUESTION_MESSAGE, null, array, null);
+            if (opcion == 1) {
+                name = "Galak 30gr";
+            } else {
+                name = "Galak 130gr";
+            }
+            seleccionProducto(name, productos);
+        }
     }//GEN-LAST:event_botonChuche9MouseClicked
 
     private void botonChuche10MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonChuche10MouseEntered
@@ -898,7 +1096,19 @@ public class RegistrarCompra extends javax.swing.JFrame {
     }//GEN-LAST:event_botonChuche10MouseExited
 
     private void botonChuche10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonChuche10MouseClicked
-        // TODO add your handling code here:
+        if (f.validacion()) {
+            String name;
+            String[] array = {" Crema y Cebolla ", " Queso ", " Original "};
+            int opcion = JOptionPane.showOptionDialog(null, "¿Cual desea?", "Seleciona...", 0, JOptionPane.QUESTION_MESSAGE, null, array, null);
+            if (opcion == 2) {
+                name = "Pringle Original";
+            } else if (opcion == 1) {
+                name = "Pringle Queso";
+            } else {
+                name = "Pringle Crema y Cebolla";
+            }
+            seleccionProducto(name, productos);
+        }
     }//GEN-LAST:event_botonChuche10MouseClicked
 
     private void botonChuche11MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonChuche11MouseEntered
@@ -910,7 +1120,7 @@ public class RegistrarCompra extends javax.swing.JFrame {
     }//GEN-LAST:event_botonChuche11MouseExited
 
     private void botonChuche11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonChuche11MouseClicked
-        // TODO add your handling code here:
+        // CAFE?
     }//GEN-LAST:event_botonChuche11MouseClicked
 
     private void botonChuche12MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonChuche12MouseEntered
@@ -922,7 +1132,19 @@ public class RegistrarCompra extends javax.swing.JFrame {
     }//GEN-LAST:event_botonChuche12MouseExited
 
     private void botonChuche12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonChuche12MouseClicked
-        // TODO add your handling code here:
+        if (f.validacion()) {
+            String name;
+            String[] array = {" Samba 32gr ", " Susy maxi ", " Cocosette maxi "};
+            int opcion = JOptionPane.showOptionDialog(null, "¿Cual desea?", "Seleciona...", 0, JOptionPane.QUESTION_MESSAGE, null, array, null);
+            if (opcion == 2) {
+                name = "Cocosette maxi";
+            } else if (opcion == 1) {
+                name = "Susy maxi";
+            } else {
+                name = "Samba 32gr";
+            }
+            seleccionProducto(name, productos);
+        }
     }//GEN-LAST:event_botonChuche12MouseClicked
 
     private void botonChuche13MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonChuche13MouseEntered
@@ -934,7 +1156,10 @@ public class RegistrarCompra extends javax.swing.JFrame {
     }//GEN-LAST:event_botonChuche13MouseExited
 
     private void botonChuche13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonChuche13MouseClicked
-        // TODO add your handling code here:
+        if (f.validacion()) {
+            String name = "Carre Avellana 25gr";
+            seleccionProducto(name, productos);
+        }
     }//GEN-LAST:event_botonChuche13MouseClicked
 
     private void botonChuche14MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonChuche14MouseEntered
@@ -946,7 +1171,10 @@ public class RegistrarCompra extends javax.swing.JFrame {
     }//GEN-LAST:event_botonChuche14MouseExited
 
     private void botonChuche14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonChuche14MouseClicked
-        // TODO add your handling code here:
+        if (f.validacion()) {
+            String name = "Oreo Americana";
+            seleccionProducto(name, productos);
+        }
     }//GEN-LAST:event_botonChuche14MouseClicked
 
     private void botonChuche15MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonChuche15MouseEntered
@@ -958,10 +1186,9 @@ public class RegistrarCompra extends javax.swing.JFrame {
     }//GEN-LAST:event_botonChuche15MouseExited
 
     private void botonChuche15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonChuche15MouseClicked
-        // TODO add your handling code here:
+        //OTROS  
     }//GEN-LAST:event_botonChuche15MouseClicked
-    
-    
+
     public static void main(String args[]) {
 
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -989,7 +1216,7 @@ public class RegistrarCompra extends javax.swing.JFrame {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new RegistrarCompra().setVisible(true);
+                new RegistrarCompra(frame, productos, zelles, pagosMoviles, pagosPuntos, efectivoUSD, efectivoBs).setVisible(true);
             }
         });
     }
@@ -1012,10 +1239,9 @@ public class RegistrarCompra extends javax.swing.JFrame {
     private javax.swing.JButton botonChuche7;
     private javax.swing.JButton botonChuche8;
     private javax.swing.JButton botonChuche9;
+    private javax.swing.JTable carrito;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JList<String> listaCompra;
     private javax.swing.JPanel panelAtras;
     private javax.swing.JPanel panelCheckout;
     private javax.swing.JPanel panelChuche1;
@@ -1036,6 +1262,7 @@ public class RegistrarCompra extends javax.swing.JFrame {
     private javax.swing.JPanel panelTituloCompra;
     private javax.swing.JPanel panelTituloProductos;
     private javax.swing.JPanel panelVaciar;
+    private javax.swing.JScrollPane scrollPane;
     private javax.swing.JLabel textAtras;
     private javax.swing.JLabel textCheckout;
     private javax.swing.JLabel textIVA;

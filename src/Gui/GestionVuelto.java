@@ -2,16 +2,51 @@ package Gui;
 
 // @author andresbucarello
 
+import EDD.EfectivoBs;
+import EDD.EfectivoUSD;
 import javax.swing.JOptionPane;
 import EDD.Helpers;
+import EDD.ListaPagoMovil;
+import EDD.ListaProductos;
+import EDD.ListaZelle;
+import EDD.Punto;
+import static Gui.Checkout.efectivoBs;
+import static Gui.Checkout.efectivoUSD;
+import static Gui.Checkout.frame;
+import static Gui.Checkout.pagosMoviles;
+import static Gui.Checkout.pagosPuntos;
+import static Gui.Checkout.tasa;
+import static Gui.Checkout.ttlBs;
+import static Gui.Checkout.ttlUSD;
+import static Gui.Checkout.zelles;
+import javax.swing.JFrame;
 
 public class GestionVuelto extends javax.swing.JFrame {
     
     Helpers f = new Helpers();
     
-    public GestionVuelto() {
+    static JFrame frame;
+    static float tasa;
+    static ListaZelle zelles;
+    static ListaPagoMovil pagosMoviles;
+    static Punto pagosPuntos;
+    static EfectivoUSD efectivoUSD;
+    static EfectivoBs efectivoBs;
+    
+    public GestionVuelto(JFrame frame, float tasa, ListaZelle listaZelle, ListaPagoMovil listaPagoMovil, Punto montoPunto, EfectivoUSD montoEfectivoUSD, EfectivoBs montoEfectivoBs) {
         initComponents();
         this.setLocationRelativeTo(null);
+        
+//        this.montoBs.setText(Float.toString(ttlBs));
+//        this.montoUSD.setText(Float.toString(ttlUSD));
+        
+        this.frame = frame;
+        this.tasa = tasa;
+        this.zelles = listaZelle;
+        this.pagosMoviles = listaPagoMovil;
+        this.pagosPuntos = montoPunto;
+        this.efectivoUSD = montoEfectivoUSD;
+        this.efectivoBs = montoEfectivoBs;
     }
 
     @SuppressWarnings("unchecked")
@@ -231,7 +266,7 @@ public class GestionVuelto extends javax.swing.JFrame {
     }//GEN-LAST:event_textAtrasMouseExited
 
     private void textAtrasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textAtrasMouseClicked
-        f.irCheckout(this);
+//        f.irCheckout(this);
     }//GEN-LAST:event_textAtrasMouseClicked
 
     private void textSiguienteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textSiguienteMouseEntered
@@ -244,7 +279,7 @@ public class GestionVuelto extends javax.swing.JFrame {
 
     private void textSiguienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textSiguienteMouseClicked
         JOptionPane.showMessageDialog(null, " COMPRA COMPLETADA CON EXITO ");
-        f.volverMenu(this);
+//        f.volverMenu(this);
     }//GEN-LAST:event_textSiguienteMouseClicked
 
     private void textZelleMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textZelleMouseEntered
@@ -322,7 +357,7 @@ public class GestionVuelto extends javax.swing.JFrame {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GestionVuelto().setVisible(true);
+                new GestionVuelto(frame, tasa, zelles, pagosMoviles, pagosPuntos, efectivoUSD, efectivoBs).setVisible(true);    
             }
         });
     }

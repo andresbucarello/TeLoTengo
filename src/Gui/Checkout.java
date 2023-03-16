@@ -1,17 +1,47 @@
 package Gui;
 
 // @author andresbucarello
-
+import EDD.EfectivoBs;
+import EDD.EfectivoUSD;
 import javax.swing.JOptionPane;
 import EDD.Helpers;
+import EDD.ListaPagoMovil;
+import EDD.ListaProductos;
+import EDD.ListaZelle;
+import EDD.PagoMovil;
+import EDD.Punto;
+import EDD.Zelle;
+import javax.swing.JFrame;
 
 public class Checkout extends javax.swing.JFrame {
-    
+
     Helpers f = new Helpers();
-    
-    public Checkout() {
+
+    static JFrame frame;
+    static float ttlBs;
+    static float ttlUSD;
+    static float tasa;
+    static ListaZelle zelles;
+    static ListaPagoMovil pagosMoviles;
+    static Punto pagosPuntos;
+    static EfectivoUSD efectivoUSD;
+    static EfectivoBs efectivoBs;
+    static ListaProductos productos;
+
+    public Checkout(JFrame frame, float ttlBs, float ttlUSD, float tasa, ListaZelle listaZelle, ListaPagoMovil listaPagoMovil, Punto montoPunto, EfectivoUSD montoEfectivoUSD, EfectivoBs montoEfectivoBs , ListaProductos lista) {
         initComponents();
         this.setLocationRelativeTo(null);
+
+        this.frame = frame;
+        this.montoBs.setText(Float.toString(ttlBs));
+        this.montoUSD.setText(Float.toString(ttlUSD));
+        this.tasa = tasa;
+        this.zelles = listaZelle;
+        this.pagosMoviles = listaPagoMovil;
+        this.pagosPuntos = montoPunto;
+        this.efectivoUSD = montoEfectivoUSD;
+        this.efectivoBs = montoEfectivoBs;
+        this.productos = lista;
     }
 
     @SuppressWarnings("unchecked")
@@ -24,7 +54,7 @@ public class Checkout extends javax.swing.JFrame {
         textMontoBs = new javax.swing.JLabel();
         montoBs = new javax.swing.JLabel();
         textMontoUSD = new javax.swing.JLabel();
-        montoUSD = new javax.swing.JLabel();
+        vueltoUSD = new javax.swing.JLabel();
         separador2 = new javax.swing.JSeparator();
         panelZelle = new javax.swing.JPanel();
         textZelle = new javax.swing.JLabel();
@@ -39,12 +69,12 @@ public class Checkout extends javax.swing.JFrame {
         tituloNombre = new javax.swing.JLabel();
         panelAtras = new javax.swing.JPanel();
         textAtras = new javax.swing.JLabel();
-        panelSiguiente = new javax.swing.JPanel();
-        textSiguiente = new javax.swing.JLabel();
         tituloNombre1 = new javax.swing.JLabel();
         vueltoBs = new javax.swing.JLabel();
-        vueltoUSD = new javax.swing.JLabel();
+        montoUSD = new javax.swing.JLabel();
         separador3 = new javax.swing.JSeparator();
+        panelSiguiente = new javax.swing.JPanel();
+        textSiguiente = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -69,17 +99,17 @@ public class Checkout extends javax.swing.JFrame {
         textMontoBs.setText("Monto Faltante BS:");
         jPanel1.add(textMontoBs, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 270, 30));
 
-        montoBs.setFont(new java.awt.Font("Courier New", 1, 24)); // NOI18N
+        montoBs.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
         montoBs.setText("0");
-        jPanel1.add(montoBs, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 100, 120, 30));
+        jPanel1.add(montoBs, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 100, 200, 30));
 
         textMontoUSD.setFont(new java.awt.Font("Courier New", 1, 24)); // NOI18N
         textMontoUSD.setText("Monto Faltante USD:");
         jPanel1.add(textMontoUSD, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 270, 30));
 
-        montoUSD.setFont(new java.awt.Font("Courier New", 1, 24)); // NOI18N
-        montoUSD.setText("0");
-        jPanel1.add(montoUSD, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 430, 310, 30));
+        vueltoUSD.setFont(new java.awt.Font("Courier New", 1, 24)); // NOI18N
+        vueltoUSD.setText("0");
+        jPanel1.add(vueltoUSD, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 430, 310, 30));
 
         separador2.setForeground(new java.awt.Color(195, 70, 176));
         jPanel1.add(separador2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, 470, 10));
@@ -225,6 +255,21 @@ public class Checkout extends javax.swing.JFrame {
 
         jPanel1.add(panelAtras, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 500, 160, 40));
 
+        tituloNombre1.setFont(new java.awt.Font("Courier New", 1, 24)); // NOI18N
+        tituloNombre1.setText("Vuelto Bs:");
+        jPanel1.add(tituloNombre1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, 160, 30));
+
+        vueltoBs.setFont(new java.awt.Font("Courier New", 1, 24)); // NOI18N
+        vueltoBs.setText("0");
+        jPanel1.add(vueltoBs, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 390, 310, 30));
+
+        montoUSD.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
+        montoUSD.setText("0");
+        jPanel1.add(montoUSD, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 130, 200, 30));
+
+        separador3.setForeground(new java.awt.Color(195, 70, 176));
+        jPanel1.add(separador3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 470, 10));
+
         panelSiguiente.setBackground(new java.awt.Color(255, 255, 255));
         panelSiguiente.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -247,26 +292,37 @@ public class Checkout extends javax.swing.JFrame {
 
         jPanel1.add(panelSiguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 500, 150, 40));
 
-        tituloNombre1.setFont(new java.awt.Font("Courier New", 1, 24)); // NOI18N
-        tituloNombre1.setText("Vuelto Bs:");
-        jPanel1.add(tituloNombre1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, 160, 30));
-
-        vueltoBs.setFont(new java.awt.Font("Courier New", 1, 24)); // NOI18N
-        vueltoBs.setText("1");
-        jPanel1.add(vueltoBs, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 390, 310, 30));
-
-        vueltoUSD.setFont(new java.awt.Font("Courier New", 1, 24)); // NOI18N
-        vueltoUSD.setText("0");
-        jPanel1.add(vueltoUSD, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 130, 120, 30));
-
-        separador3.setForeground(new java.awt.Color(195, 70, 176));
-        jPanel1.add(separador3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 470, 10));
-
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 510, 560));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+
+    private void finalizar() {
+        if (Float.parseFloat(vueltoBs.getText()) == 0 && Float.parseFloat(montoBs.getText()) == 0) {
+            JOptionPane.showMessageDialog(null, " COMPRA COMPLETADA CON EXITO ");
+            this.setVisible(false);
+            f.escribirTxt(productos);
+            f.escribirZelles(zelles);
+        }
+    }
+
+    private float validarFloat() {
+        float cantidad;
+        do {
+            String num = JOptionPane.showInputDialog(null, " Ingrese el monto pagado ( EN CASO DE SER EN DECIMALES UTILIZAR PUNTO ' . ' ): ");
+            cantidad = f.validarFloat(num);
+            if (cantidad == Float.parseFloat(this.montoUSD.getText())) {
+                JOptionPane.showMessageDialog(null, " MONTO COMPLETO PAGADO ");
+            }
+        } while (cantidad == 0);
+        return cantidad;
+    }
+
+    private void agregarVuelto(float cantidad) {
+        this.vueltoUSD.setText(Float.toString(cantidad - Float.parseFloat(montoUSD.getText())));
+        this.vueltoBs.setText(Float.toString(cantidad * tasa - Float.parseFloat(montoBs.getText())));
+    }
+
     private void textAtrasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textAtrasMouseEntered
         f.entrarRetroceder(textAtras, panelAtras);
     }//GEN-LAST:event_textAtrasMouseEntered
@@ -275,26 +331,11 @@ public class Checkout extends javax.swing.JFrame {
         f.salirRetroceder(textAtras, panelAtras);
     }//GEN-LAST:event_textAtrasMouseExited
 
+    // VERIFICADO
     private void textAtrasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textAtrasMouseClicked
-        f.registrarCompra(this);
+        this.setVisible(false);
+        frame.setVisible(true);
     }//GEN-LAST:event_textAtrasMouseClicked
-
-    private void textSiguienteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textSiguienteMouseEntered
-        f.entrarBoton(textSiguiente, panelSiguiente);
-    }//GEN-LAST:event_textSiguienteMouseEntered
-
-    private void textSiguienteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textSiguienteMouseExited
-        f.salirBoton(textSiguiente,panelSiguiente);
-    }//GEN-LAST:event_textSiguienteMouseExited
-
-    private void textSiguienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textSiguienteMouseClicked
-        if(Integer.parseInt(vueltoBs.getText()) > 0 || Integer.parseInt(vueltoUSD.getText()) > 0){
-            f.irVuelto(this);
-        }else{
-            JOptionPane.showMessageDialog(null, " COMPRA COMPLETADA CON EXITO ");
-            f.volverMenu(this);
-        }
-    }//GEN-LAST:event_textSiguienteMouseClicked
 
     private void textZelleMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textZelleMouseEntered
         f.entrarPanel(panelZelle);
@@ -305,7 +346,22 @@ public class Checkout extends javax.swing.JFrame {
     }//GEN-LAST:event_textZelleMouseExited
 
     private void textZelleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textZelleMouseClicked
-        // TODO add your handling code here:
+        if (f.validacion()) {
+            float monto = validarFloat();
+            String nombre = JOptionPane.showInputDialog(null, " Ingrese el nombre de la persona que envia: ");
+            String nro = JOptionPane.showInputDialog(null, " Ingrese el codigo de confirmacion de la transferencia: ");
+            if (monto > Float.parseFloat(this.montoUSD.getText())) {
+                agregarVuelto(monto);
+            } else {
+                float montoF = Float.parseFloat(montoUSD.getText()) - monto;
+                montoUSD.setText(Float.toString(montoF));
+                montoBs.setText(Float.toString(montoF * tasa));
+            }
+            Zelle zelle = new Zelle(monto, nombre, nro);
+            zelles.agregar(true, zelle);
+            f.escribirZelles(zelles);
+            finalizar();
+        }
     }//GEN-LAST:event_textZelleMouseClicked
 
     private void textPagoMovilMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textPagoMovilMouseEntered
@@ -317,7 +373,22 @@ public class Checkout extends javax.swing.JFrame {
     }//GEN-LAST:event_textPagoMovilMouseExited
 
     private void textPagoMovilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textPagoMovilMouseClicked
-        // TODO add your handling code here:
+        if (f.validacion()) {
+            float monto = validarFloat();
+            String referenciaSTR = JOptionPane.showInputDialog(null, " Ingrese la referencia del pago movil: ");
+            int referencia = f.validarInt(referenciaSTR);
+            if (monto > Float.parseFloat(this.montoBs.getText())) {
+                agregarVuelto(monto);
+            } else {
+                float montoF = Float.parseFloat(montoBs.getText()) - monto;
+                montoUSD.setText(Float.toString(montoF / tasa));
+                montoBs.setText(Float.toString(montoF));
+            }
+            PagoMovil pagoMovil = new PagoMovil(monto, referencia);
+            pagosMoviles.agregar(true, pagoMovil);
+            f.escribirPagosMoviles(pagosMoviles);
+            finalizar();
+        }
     }//GEN-LAST:event_textPagoMovilMouseClicked
 
     private void textPuntoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textPuntoMouseEntered
@@ -329,7 +400,24 @@ public class Checkout extends javax.swing.JFrame {
     }//GEN-LAST:event_textPuntoMouseExited
 
     private void textPuntoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textPuntoMouseClicked
-        // TODO add your handling code here:
+        if (f.validacion()) {
+            float monto = validarFloat();
+            float deuda = Float.parseFloat(this.montoBs.getText());
+            System.out.println("M:" + monto);
+            System.out.println("D:" + deuda);
+            if (monto > deuda) {
+                agregarVuelto(monto);
+                System.out.println("1");
+            } else {
+                System.out.println("2");
+                float montoF = deuda - monto;
+                montoUSD.setText(Float.toString(montoF / tasa));
+                montoBs.setText(Float.toString(montoF));
+            }
+            pagosPuntos.setMonto(pagosPuntos.getMonto() + monto);
+            f.escribirPunto(pagosPuntos);
+            finalizar();
+        }
     }//GEN-LAST:event_textPuntoMouseClicked
 
     private void textEfectivoUSDMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textEfectivoUSDMouseEntered
@@ -341,7 +429,19 @@ public class Checkout extends javax.swing.JFrame {
     }//GEN-LAST:event_textEfectivoUSDMouseExited
 
     private void textEfectivoUSDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textEfectivoUSDMouseClicked
-        // TODO add your handling code here:
+        if (f.validacion()) {
+            float monto = validarFloat();
+            if (monto > Float.parseFloat(this.montoUSD.getText())) {
+                agregarVuelto(monto);
+            } else {
+                float montoF = Float.parseFloat(montoUSD.getText()) - monto;
+                montoUSD.setText(Float.toString(montoF));
+                montoBs.setText(Float.toString(montoF * tasa));
+            }
+            efectivoUSD.setMonto(efectivoUSD.getMonto() + monto);
+            f.escribirEfectivoUSD(efectivoUSD);
+            finalizar();
+        }
     }//GEN-LAST:event_textEfectivoUSDMouseClicked
 
     private void textEfectivoBsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textEfectivoBsMouseEntered
@@ -353,12 +453,43 @@ public class Checkout extends javax.swing.JFrame {
     }//GEN-LAST:event_textEfectivoBsMouseExited
 
     private void textEfectivoBsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textEfectivoBsMouseClicked
-        // TODO add your handling code here:
+        if (f.validacion()) {
+            float monto = validarFloat();
+            if (monto > Float.parseFloat(this.montoBs.getText())) {
+                agregarVuelto(monto);
+            } else {
+                float montoF = Float.parseFloat(montoBs.getText()) - monto;
+                montoUSD.setText(Float.toString(montoF / tasa));
+                montoBs.setText(Float.toString(montoF));
+            }
+            efectivoBs.setMonto(efectivoBs.getMonto() + monto);
+            f.escribirEfectivoBs(efectivoBs);
+            finalizar();
+        }
     }//GEN-LAST:event_textEfectivoBsMouseClicked
-    
-    
+
+    private void textSiguienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textSiguienteMouseClicked
+        String[] array = {" No ", " Si "};
+        int opcion = JOptionPane.showOptionDialog(null, "¿HA ENTREGADO EL VUELTO COMPLETO AL CLIENTE?", "Seleciona...", 0, JOptionPane.QUESTION_MESSAGE, null, array, null);
+        if (opcion == 1) {
+            JOptionPane.showMessageDialog(null, " COMPRA COMPLETADA CON EXITO ");
+            this.setVisible(false);
+            f.escribirTxt(productos);
+        } else{
+            JOptionPane.showMessageDialog(null, " ENTREGUE EL VUELTO E INTENTE DE NUEVO ");
+        }
+    }//GEN-LAST:event_textSiguienteMouseClicked
+
+    private void textSiguienteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textSiguienteMouseEntered
+        f.entrarBoton(textSiguiente, panelSiguiente);
+    }//GEN-LAST:event_textSiguienteMouseEntered
+
+    private void textSiguienteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textSiguienteMouseExited
+        f.salirBoton(textSiguiente, panelSiguiente);
+    }//GEN-LAST:event_textSiguienteMouseExited
+
     public static void main(String args[]) {
-        
+
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -384,7 +515,7 @@ public class Checkout extends javax.swing.JFrame {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Checkout().setVisible(true);
+                new Checkout(frame, ttlBs, ttlUSD, tasa, zelles, pagosMoviles, pagosPuntos, efectivoUSD, efectivoBs, productos).setVisible(true);
             }
         });
     }

@@ -9,6 +9,13 @@ public class Producto {
     private int precio;
     private int cantidad;
     
+    public Producto(String nombre, String cantidad, String precio){
+        this.siguiente = null;
+        this.nombre = nombre;
+        this.cantidad = Integer.parseInt(cantidad);
+        this.precio = Integer.parseInt(precio);
+    }
+    
     /**
      * @return the siguiente
      */

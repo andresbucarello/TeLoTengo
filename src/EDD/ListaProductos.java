@@ -1,37 +1,47 @@
 package EDD;
 
 // @author andresbucarello
+public class ListaProductos {
 
-public class ListaProductos{
     private Producto primero;
     private Producto ultimo;
     private int cantidad;
-    
-    public ListaProductos(){
+
+    public ListaProductos() {
         this.primero = null;
         this.ultimo = null;
         this.cantidad = 0;
     }
-    
-    public boolean estaVacia(){
+
+    public boolean estaVacia() {
         return this.cantidad == 0;
     }
-    
-    public void agregar(boolean inicio, Producto nuevo){
-        if(estaVacia()){
-            this.primero = this.ultimo = null;
-        }else{
-            if(inicio){
+
+    public void agregar(boolean inicio, Producto nuevo) {
+        if (estaVacia()) {
+            this.primero = this.ultimo = nuevo;
+        } else {
+            if (inicio) {
                 nuevo.setSiguiente(this.primero);
                 this.primero = nuevo;
-            }else{
+            } else {
                 this.ultimo.setSiguiente(nuevo);
                 this.ultimo = nuevo;
             }
         }
-        this.cantidad ++;
+        this.cantidad++;
     }
-    
+
+    public void print() {
+        Producto temp = this.getPrimero();
+        String productosActuales = "";
+        for (int i = 0; i < this.getCantidad(); i++) {
+            productosActuales += temp.getNombre() + "," + temp.getCantidad() + "," + temp.getPrecio() + "\n";
+            temp = temp.getSiguiente();
+        }
+        System.out.println(productosActuales);
+    }
+
     /**
      * @return the primero
      */

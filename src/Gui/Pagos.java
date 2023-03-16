@@ -2,15 +2,47 @@ package Gui;
 
 // @author andresbucarello
 
+import EDD.EfectivoBs;
+import EDD.EfectivoUSD;
 import EDD.Helpers;
+import EDD.ListaPagoMovil;
+import EDD.ListaProductos;
+import EDD.ListaZelle;
+import EDD.PagoMovil;
+import EDD.Punto;
+import EDD.Zelle;
+import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
 
 public class Pagos extends javax.swing.JFrame {
     
-    Helpers f = new Helpers();
+    static JFrame frame;
+    static ListaZelle zelles;
+    static ListaPagoMovil pagosMoviles;
+    static Punto pagosPuntos;
+    static EfectivoUSD efectivoUSDV;
+    static EfectivoBs efectivoBsV;
     
-    public Pagos() {
+    Helpers f = new Helpers();
+    DefaultTableModel modelo = new DefaultTableModel();
+    DefaultTableModel modelo2 = new DefaultTableModel();
+    
+    public Pagos(JFrame frame, ListaZelle listaZelle, ListaPagoMovil listaPagoMovil, Punto montoPunto, EfectivoUSD montoEfectivoUSD, EfectivoBs montoEfectivoBs) {
         initComponents();
         this.setLocationRelativeTo(null);
+        
+        this.frame = frame;
+        this.zelles = listaZelle;
+        this.pagosMoviles = listaPagoMovil;
+        this.pagosPuntos = montoPunto;
+        this.efectivoUSDV = montoEfectivoUSD;
+        this.efectivoBsV = montoEfectivoBs;
+        
+        cargarZelle();
+        cargarPagosMoviles();
+        efectivoBs.setText(Float.toString(efectivoBsV.getMonto()));
+        efectivoUSD.setText(Float.toString(efectivoUSDV.getMonto()));
+        punto.setText(Float.toString(pagosPuntos.getMonto()));
     }
 
     @SuppressWarnings("unchecked")
@@ -23,7 +55,7 @@ public class Pagos extends javax.swing.JFrame {
         panelAtras = new javax.swing.JPanel();
         textAtras = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        carrito = new javax.swing.JTable();
         textZelle = new javax.swing.JLabel();
         textPagoMovil = new javax.swing.JLabel();
         textEfectivoBs = new javax.swing.JLabel();
@@ -33,7 +65,7 @@ public class Pagos extends javax.swing.JFrame {
         textEfectivoUSD = new javax.swing.JLabel();
         efectivoUSD = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        carrito2 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -76,7 +108,7 @@ public class Pagos extends javax.swing.JFrame {
 
         jPanel1.add(panelAtras, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 100, 60));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        carrito.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -95,7 +127,7 @@ public class Pagos extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(carrito);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 320, 340));
 
@@ -119,7 +151,7 @@ public class Pagos extends javax.swing.JFrame {
 
         efectivoBs.setFont(new java.awt.Font("Courier New", 0, 24)); // NOI18N
         efectivoBs.setText("0");
-        jPanel1.add(efectivoBs, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 480, 150, 40));
+        jPanel1.add(efectivoBs, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 480, 180, 40));
 
         textPunto.setFont(new java.awt.Font("Courier New", 1, 24)); // NOI18N
         textPunto.setForeground(new java.awt.Color(195, 70, 176));
@@ -129,7 +161,7 @@ public class Pagos extends javax.swing.JFrame {
 
         punto.setFont(new java.awt.Font("Courier New", 0, 24)); // NOI18N
         punto.setText("0");
-        jPanel1.add(punto, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 480, 160, 40));
+        jPanel1.add(punto, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 480, 190, 40));
 
         textEfectivoUSD.setFont(new java.awt.Font("Courier New", 1, 24)); // NOI18N
         textEfectivoUSD.setForeground(new java.awt.Color(195, 70, 176));
@@ -139,9 +171,9 @@ public class Pagos extends javax.swing.JFrame {
 
         efectivoUSD.setFont(new java.awt.Font("Courier New", 0, 24)); // NOI18N
         efectivoUSD.setText("0");
-        jPanel1.add(efectivoUSD, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 520, 150, 40));
+        jPanel1.add(efectivoUSD, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 520, 180, 40));
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        carrito2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -160,7 +192,7 @@ public class Pagos extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(carrito2);
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 130, 320, 340));
 
@@ -168,7 +200,43 @@ public class Pagos extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    private void cargarZelle(){
+        modelo.addColumn("Monto");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("Codigo");
+        carrito.setModel(modelo);
+        
+        if(!zelles.estaVacia()){
+            Zelle zelle = zelles.getPrimero();
+            for (int i = 0; i < zelles.getCantidad(); i++) {
+                Object[] datos = new Object[3];
+                datos[0] = zelle.getMonto();
+                datos[1] = zelle.getNombre();
+                datos[2] = zelle.getCodigo();
+                modelo.addRow(datos);
+                zelle = zelle.getSiguiente();
+            }
+        }
+    }
+    
+    private void cargarPagosMoviles(){
+        modelo2.addColumn("Monto");
+        modelo2.addColumn("Referencia");
+        carrito2.setModel(modelo2);
+        
+        if(!pagosMoviles.estaVacia()){
+            PagoMovil pagoMovil = pagosMoviles.getPrimero();
+            for (int i = 0; i < pagosMoviles.getCantidad(); i++) {
+                Object[] datos = new Object[2];
+                datos[0] = pagoMovil.getMonto();
+                datos[1] = pagoMovil.getReferencia();
+                modelo2.addRow(datos);
+                pagoMovil = pagoMovil.getSiguiente();
+            }
+        }
+    }
+    
     private void textAtrasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textAtrasMouseEntered
         f.entrarRetroceder(textAtras, panelAtras);
     }//GEN-LAST:event_textAtrasMouseEntered
@@ -178,7 +246,8 @@ public class Pagos extends javax.swing.JFrame {
     }//GEN-LAST:event_textAtrasMouseExited
 
     private void textAtrasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textAtrasMouseClicked
-        f.volverMenu(this);
+        this.setVisible(false);
+        this.frame.setVisible(true);
     }//GEN-LAST:event_textAtrasMouseClicked
 
     public static void main(String args[]) {
@@ -206,19 +275,19 @@ public class Pagos extends javax.swing.JFrame {
         //</editor-fold>
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Pagos().setVisible(true);
+                new Pagos(frame, zelles, pagosMoviles, pagosPuntos, efectivoUSDV, efectivoBsV).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable carrito;
+    private javax.swing.JTable carrito2;
     private javax.swing.JLabel efectivoBs;
     private javax.swing.JLabel efectivoUSD;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JPanel panelAtras;
     private javax.swing.JPanel panelTitulo;
     private javax.swing.JLabel punto;

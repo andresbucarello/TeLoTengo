@@ -1,16 +1,45 @@
 package Gui;
 
 // @author andresbucarello
-
+import EDD.EfectivoBs;
+import EDD.EfectivoUSD;
 import EDD.Helpers;
+import EDD.ListaPagoMovil;
+import EDD.ListaProductos;
+import EDD.ListaZelle;
+import EDD.PagoMovil;
+import EDD.Producto;
+import EDD.Punto;
+import EDD.Zelle;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.PrintWriter;
+import javax.swing.JOptionPane;
 
 public class Menu extends javax.swing.JFrame {
-    
+
+    static ListaProductos productos;
+
     Helpers f = new Helpers();
-    
+
+    static ListaZelle listaZelle;
+    static ListaPagoMovil listaPagoMovil;
+    static Punto montoPunto;
+    static EfectivoUSD montoEfectivoUSD;
+    static EfectivoBs montoEfectivoBs;
+
     public Menu() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.productos = f.leerTxt();
+        this.listaZelle = f.leerZelles();
+        this.listaPagoMovil = f.leerPagosMoviles();
+        this.montoPunto = f.leerPunto();
+        this.montoEfectivoUSD = f.leerEfectivoUSD();
+        this.montoEfectivoBs = f.leerEfectivoBs();
+//        productos.print();
     }
 
     @SuppressWarnings("unchecked")
@@ -143,7 +172,7 @@ public class Menu extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+
     private void textSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textSalirMouseClicked
         System.exit(0);
     }//GEN-LAST:event_textSalirMouseClicked
@@ -165,7 +194,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_textRegistrarCompraMouseExited
 
     private void textRegistrarCompraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textRegistrarCompraMouseClicked
-        f.registrarCompra(this);
+        f.registrarCompra(this, productos, listaZelle, listaPagoMovil, montoPunto, montoEfectivoUSD, montoEfectivoBs);
     }//GEN-LAST:event_textRegistrarCompraMouseClicked
 
     private void textInventarioMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textInventarioMouseEntered
@@ -177,7 +206,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_textInventarioMouseExited
 
     private void textInventarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textInventarioMouseClicked
-        f.inventario(this);
+        f.inventario(this, productos);
     }//GEN-LAST:event_textInventarioMouseClicked
 
     private void textPagosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textPagosMouseEntered
@@ -189,11 +218,11 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_textPagosMouseExited
 
     private void textPagosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textPagosMouseClicked
-        f.pagos(this);
+        f.pagos(this, listaZelle, listaPagoMovil, montoPunto, montoEfectivoUSD, montoEfectivoBs);
     }//GEN-LAST:event_textPagosMouseClicked
-
+    
     public static void main(String args[]) {
-        
+
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 

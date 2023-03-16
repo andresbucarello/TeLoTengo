@@ -1,16 +1,41 @@
 package Gui;
 
 // @author andresbucarello
-
 import EDD.Helpers;
+import EDD.ListaProductos;
+import EDD.Producto;
+import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
 
 public class GestionarInventario extends javax.swing.JFrame {
-    
+
+    static ListaProductos productos;
+    static JFrame frame;
+    private Producto productoSeleccionado;
+
     Helpers f = new Helpers();
-    
-    public GestionarInventario() {
+    DefaultTableModel modelo = new DefaultTableModel();
+
+    public GestionarInventario(JFrame frame, ListaProductos productos) {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.productos = productos;
+        this.frame = frame;
+
+        modelo.addColumn("Producto");
+        modelo.addColumn("Cantidad");
+        modelo.addColumn("Precio");
+        carrito.setModel(modelo);
+
+        productoSeleccionado = productos.getPrimero();
+        for (int i = 0; i < productos.getCantidad(); i++) {
+            Object[] datos = new Object[3];
+            datos[0] = productoSeleccionado.getNombre();
+            datos[1] = productoSeleccionado.getCantidad();
+            datos[2] = productoSeleccionado.getPrecio();
+            modelo.addRow(datos);
+            productoSeleccionado = productoSeleccionado.getSiguiente();
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -23,7 +48,7 @@ public class GestionarInventario extends javax.swing.JFrame {
         panelTitulo = new javax.swing.JPanel();
         textTitulo = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        carrito = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -66,7 +91,7 @@ public class GestionarInventario extends javax.swing.JFrame {
 
         jPanel1.add(panelTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, 340, 60));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        carrito.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -77,7 +102,8 @@ public class GestionarInventario extends javax.swing.JFrame {
                 "Title 1", "Title 2"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        carrito.setFocusable(false);
+        jScrollPane1.setViewportView(carrito);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 460, 410));
 
@@ -95,11 +121,12 @@ public class GestionarInventario extends javax.swing.JFrame {
     }//GEN-LAST:event_textAtrasMouseExited
 
     private void textAtrasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textAtrasMouseClicked
-        f.volverMenu(this);
+        this.setVisible(false);
+        this.frame.setVisible(true);
     }//GEN-LAST:event_textAtrasMouseClicked
 
     public static void main(String args[]) {
-        
+
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -124,15 +151,15 @@ public class GestionarInventario extends javax.swing.JFrame {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GestionarInventario().setVisible(true);
+                new GestionarInventario(frame, productos).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable carrito;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JPanel panelAtras;
     private javax.swing.JPanel panelTitulo;
     private javax.swing.JLabel textAtras;

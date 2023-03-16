@@ -1,0 +1,24 @@
+Doritos,200,6
+Chesee Tris,176,6
+Pepito,180,6
+De Todito,36,6
+Platanitos,18,6
+Big Bom,384,1
+Trululu,72,3
+Chocolate de Leche 30gr,864,3
+Chocolate de Leche 70gr,288,5
+Chocolate de Leche 130gr,135,6
+Cri-Cri 27gr,864,3
+Cri-Cri 123gr,160,6
+Rikiti 30gr,72,3
+Rikiti 130gr,5,6
+Galak 30gr,72,3
+Galak 130gr,10,6
+Carre Avellana 25gr,64,3
+Samba 32gr,960,3
+Cocosette maxi,648,3
+Susy maxi,425,3
+Oreo Americana,139,5
+Pringle Original,180,6
+Pringle Queso,60,6
+Pringle Crema y Cebolla,20,6
