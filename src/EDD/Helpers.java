@@ -2,7 +2,6 @@ package EDD;
 
 // @author andresbucarello
 import Gui.Checkout;
-import Gui.GestionVuelto;
 import Gui.GestionarInventario;
 import Gui.Menu;
 import Gui.Pagos;

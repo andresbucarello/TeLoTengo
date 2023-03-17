@@ -843,7 +843,6 @@ public class RegistrarCompra extends javax.swing.JFrame {
     private void vaciar(ListaProductos lista_productos) {
         if (carrito.getRowCount() > 0) {
             DefaultTableModel tm = (DefaultTableModel) carrito.getModel();
-            System.out.println(carrito.getRowCount());
             int i = 0;
             while (i < carrito.getRowCount()) {
                 String nombre = String.valueOf(tm.getValueAt(i, 0));
@@ -875,7 +874,6 @@ public class RegistrarCompra extends javax.swing.JFrame {
 
     private void textAtrasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textAtrasMouseClicked
         vaciar(productos);
-        System.out.println();
         this.setVisible(false);
         this.frame.setVisible(true);
     }//GEN-LAST:event_textAtrasMouseClicked
@@ -1010,7 +1008,6 @@ public class RegistrarCompra extends javax.swing.JFrame {
             String[] array = {" 130gr ", " 70gr ", " 30gr "};
             int opcion = JOptionPane.showOptionDialog(null, "¿Cual desea?", "Seleciona...", 0, JOptionPane.QUESTION_MESSAGE, null, array, null);
             if (opcion == 2) {
-                System.out.println("HOLAAS");
                 name = "Chocolate de Leche 30gr";
             } else if (opcion == 1) {
                 name = "Chocolate de Leche 70gr";

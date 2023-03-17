@@ -403,13 +403,9 @@ public class Checkout extends javax.swing.JFrame {
         if (f.validacion()) {
             float monto = validarFloat();
             float deuda = Float.parseFloat(this.montoBs.getText());
-            System.out.println("M:" + monto);
-            System.out.println("D:" + deuda);
             if (monto > deuda) {
                 agregarVuelto(monto);
-                System.out.println("1");
             } else {
-                System.out.println("2");
                 float montoF = deuda - monto;
                 montoUSD.setText(Float.toString(montoF / tasa));
                 montoBs.setText(Float.toString(montoF));
