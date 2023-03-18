@@ -22,3 +22,8 @@ Oreo Americana,144,5
 Pringle Original,180,6
 Pringle Queso,60,6
 Pringle Crema y Cebolla,20,6
+Nescafe Mocachino,385,5
+Nescafe Vainilla,385,5
+Nescafe Capuchino,385,5
+Nescafe Achocolatado,385,5
+Nescafe Tradicional,17,5
