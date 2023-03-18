@@ -1183,7 +1183,23 @@ public class RegistrarCompra extends javax.swing.JFrame {
     }//GEN-LAST:event_botonChuche15MouseExited
 
     private void botonChuche15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonChuche15MouseClicked
-        //OTROS  
+        if (f.validacion()) {
+            String name;
+            String[] array = {" Nescafe Mocachino ", " Nescafe Vainilla ", " Nescafe Capuchino ", " Nescafe Achocolatado ", " Nescafe Tradicional "};
+            int opcion = JOptionPane.showOptionDialog(null, "¿Cual desea?", "Seleciona...", 0, JOptionPane.QUESTION_MESSAGE, null, array, null);
+            if (opcion == 0) {
+                name = "Nescafe Mocachino";
+            } else if (opcion == 1) {
+                name = "Nescafe Vainilla";
+            }else if (opcion == 2) {
+                name = "Nescafe Capuchino";
+            }else if (opcion == 3) {
+                name = "Nescafe Achocolatado";
+            } else {
+                name = "Nescafe Tradicional";
+            }
+            seleccionProducto(name, productos);
+        }
     }//GEN-LAST:event_botonChuche15MouseClicked
 
     public static void main(String args[]) {
