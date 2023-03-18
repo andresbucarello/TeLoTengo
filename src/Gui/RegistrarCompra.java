@@ -33,7 +33,7 @@ public class RegistrarCompra extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
 
-        this.tasa = 24.61f;
+        this.tasa = 24.20f;
 
         this.frame = frame;
         this.productos = lista_productos;
@@ -811,13 +811,21 @@ public class RegistrarCompra extends javax.swing.JFrame {
 //        float numero1 = 19.5f; // o float numero = (float)19.5;
         float ttlUSD = Float.parseFloat(totalUSD.getText());
         ttlUSD += productoSeleccionado.getPrecio() * cantidad;
-        String[] promos = {"Trululu", "Samba 32gr", "Cocosette maxi", "Susy maxi", "Oreo Americana","Chocolate de Leche 30gr","Cri-Cri 27gr","Galak 30gr"};
+        String[] promos = {"Trululu", "Samba 32gr", "Cocosette maxi", "Susy maxi", "Oreo Americana", "Chocolate de Leche 30gr", "Cri-Cri 27gr", "Galak 30gr"};
         for (String promo : promos) {
             if (promo.equalsIgnoreCase(productoSeleccionado.getNombre())) {
-                if (cantidad % 2 == 0) {
-                    int rest = cantidad / 2;
-                    ttlUSD -= rest;
+                if (productoSeleccionado.getNombre().equalsIgnoreCase("Oreo Americana")) {
+                    if (cantidad % 3 == 0) {
+                        int rest = cantidad / 3;
+                        ttlUSD -= rest;
+                    }
+                } else {
+                    if (cantidad % 2 == 0) {
+                        int rest = cantidad / 2;
+                        ttlUSD -= rest;
+                    }
                 }
+
             }
         }
 
