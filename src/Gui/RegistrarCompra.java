@@ -811,15 +811,25 @@ public class RegistrarCompra extends javax.swing.JFrame {
 //        float numero1 = 19.5f; // o float numero = (float)19.5;
         float ttlUSD = Float.parseFloat(totalUSD.getText());
         ttlUSD += productoSeleccionado.getPrecio() * cantidad;
-        String ttl = String.valueOf((double)Math.round((double) ttlUSD * 100d)/100);
+        String[] promos = {"Trululu", "Samba 32gr", "Cocosette maxi", "Susy maxi", "Oreo Americana","Chocolate de Leche 30gr","Cri-Cri 27gr","Galak 30gr"};
+        for (String promo : promos) {
+            if (promo.equalsIgnoreCase(productoSeleccionado.getNombre())) {
+                if (cantidad % 2 == 0) {
+                    int rest = cantidad / 2;
+                    ttlUSD -= rest;
+                }
+            }
+        }
+
+        String ttl = String.valueOf((double) Math.round((double) ttlUSD * 100d) / 100);
         ttlUSD = Float.parseFloat(ttl);
-        
+
         totalUSD.setText(Float.toString(ttlUSD));
-        
+
         float ttlBs = ttlUSD * tasa;
-        String tlbs = String.valueOf((double)Math.round((double) ttlBs * 100d)/100);
+        String tlbs = String.valueOf((double) Math.round((double) ttlBs * 100d) / 100);
         ttlBs = Float.parseFloat(tlbs);
-        
+
         totalBs.setText(Float.toString(ttlBs));
         float impuesto = ttlUSD * 0.16f;
         IVA.setText(Float.toString(impuesto));
@@ -850,7 +860,7 @@ public class RegistrarCompra extends javax.swing.JFrame {
                 llenar(nombre, cantidad, lista_productos);
                 i++;
             }
-            
+
             float ttlUSD = 0;
             totalUSD.setText(Float.toString(ttlUSD));
             float ttlBs = ttlUSD * tasa;
@@ -1191,9 +1201,9 @@ public class RegistrarCompra extends javax.swing.JFrame {
                 name = "Nescafe Mocachino";
             } else if (opcion == 1) {
                 name = "Nescafe Vainilla";
-            }else if (opcion == 2) {
+            } else if (opcion == 2) {
                 name = "Nescafe Capuchino";
-            }else if (opcion == 3) {
+            } else if (opcion == 3) {
                 name = "Nescafe Achocolatado";
             } else {
                 name = "Nescafe Tradicional";
