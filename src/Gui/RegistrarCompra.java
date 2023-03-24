@@ -45,7 +45,7 @@ public class RegistrarCompra extends javax.swing.JFrame {
 
         modelo.addColumn("Producto");
         modelo.addColumn("Cantidad");
-        modelo.addColumn("Precio");
+        modelo.addColumn("Precio Unitario");
         carrito.setModel(modelo);
     }
 
