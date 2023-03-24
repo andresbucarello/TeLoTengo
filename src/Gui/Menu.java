@@ -29,6 +29,7 @@ public class Menu extends javax.swing.JFrame {
     static Punto montoPunto;
     static EfectivoUSD montoEfectivoUSD;
     static EfectivoBs montoEfectivoBs;
+    static float tasa;
 
     public Menu() {
         initComponents();
@@ -39,6 +40,7 @@ public class Menu extends javax.swing.JFrame {
         this.montoPunto = f.leerPunto();
         this.montoEfectivoUSD = f.leerEfectivoUSD();
         this.montoEfectivoBs = f.leerEfectivoBs();
+        this.tasa = 24.20f;
 //        productos.print();
     }
 
@@ -57,6 +59,12 @@ public class Menu extends javax.swing.JFrame {
         textPagos = new javax.swing.JLabel();
         panelSalir = new javax.swing.JPanel();
         textSalir = new javax.swing.JLabel();
+        panelModificarStock = new javax.swing.JPanel();
+        textModificarStock = new javax.swing.JLabel();
+        panelModificarPrecios = new javax.swing.JPanel();
+        textModificarPrecios = new javax.swing.JLabel();
+        panelModificarTasa = new javax.swing.JPanel();
+        textModificarTasa = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -168,11 +176,91 @@ public class Menu extends javax.swing.JFrame {
 
         jPanel1.add(panelSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 50, 40));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 380, 520));
+        panelModificarStock.setBackground(new java.awt.Color(195, 70, 176));
+        panelModificarStock.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        textModificarStock.setFont(new java.awt.Font("Courier New", 0, 24)); // NOI18N
+        textModificarStock.setForeground(new java.awt.Color(255, 255, 255));
+        textModificarStock.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        textModificarStock.setText("Modificar Stock");
+        textModificarStock.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        textModificarStock.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                textModificarStockMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                textModificarStockMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                textModificarStockMouseExited(evt);
+            }
+        });
+        panelModificarStock.add(textModificarStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 40));
+
+        jPanel1.add(panelModificarStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 500, 300, 40));
+
+        panelModificarPrecios.setBackground(new java.awt.Color(195, 70, 176));
+        panelModificarPrecios.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        textModificarPrecios.setFont(new java.awt.Font("Courier New", 0, 24)); // NOI18N
+        textModificarPrecios.setForeground(new java.awt.Color(255, 255, 255));
+        textModificarPrecios.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        textModificarPrecios.setText("Modificar Precios");
+        textModificarPrecios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        textModificarPrecios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                textModificarPreciosMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                textModificarPreciosMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                textModificarPreciosMouseExited(evt);
+            }
+        });
+        panelModificarPrecios.add(textModificarPrecios, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 40));
+
+        jPanel1.add(panelModificarPrecios, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 560, 300, 40));
+
+        panelModificarTasa.setBackground(new java.awt.Color(195, 70, 176));
+        panelModificarTasa.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        textModificarTasa.setFont(new java.awt.Font("Courier New", 0, 24)); // NOI18N
+        textModificarTasa.setForeground(new java.awt.Color(255, 255, 255));
+        textModificarTasa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        textModificarTasa.setText("Modificar Tasa");
+        textModificarTasa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        textModificarTasa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                textModificarTasaMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                textModificarTasaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                textModificarTasaMouseExited(evt);
+            }
+        });
+        panelModificarTasa.add(textModificarTasa, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 40));
+
+        jPanel1.add(panelModificarTasa, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 620, 300, 40));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 380, 700));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    private float validarTasa(){
+        String num = JOptionPane.showInputDialog(null, " La tasa actual es: "+this.tasa+" || Por favor ingrese la nueva tasa");
+        try{
+            float tas = Float.parseFloat(num);
+            return tas;
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null, " ERROR! LA TASA INGRESADA NO ES VALIDA (DEBES USAR '.' PARA SEPARAR DECIMALES) ");
+            return this.tasa;
+        }
+    }
+    
     private void textSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textSalirMouseClicked
         System.exit(0);
     }//GEN-LAST:event_textSalirMouseClicked
@@ -194,7 +282,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_textRegistrarCompraMouseExited
 
     private void textRegistrarCompraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textRegistrarCompraMouseClicked
-        f.registrarCompra(this, productos, listaZelle, listaPagoMovil, montoPunto, montoEfectivoUSD, montoEfectivoBs);
+        f.registrarCompra(this, productos, listaZelle, listaPagoMovil, montoPunto, montoEfectivoUSD, montoEfectivoBs, tasa);
     }//GEN-LAST:event_textRegistrarCompraMouseClicked
 
     private void textInventarioMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textInventarioMouseEntered
@@ -220,6 +308,44 @@ public class Menu extends javax.swing.JFrame {
     private void textPagosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textPagosMouseClicked
         f.pagos(this, listaZelle, listaPagoMovil, montoPunto, montoEfectivoUSD, montoEfectivoBs);
     }//GEN-LAST:event_textPagosMouseClicked
+
+    private void textModificarStockMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textModificarStockMouseClicked
+        f.modificarStock(this, productos);
+    }//GEN-LAST:event_textModificarStockMouseClicked
+
+    private void textModificarStockMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textModificarStockMouseEntered
+        f.entrarPanel(panelModificarStock);
+    }//GEN-LAST:event_textModificarStockMouseEntered
+
+    private void textModificarStockMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textModificarStockMouseExited
+        f.salirPanel(panelModificarStock);
+    }//GEN-LAST:event_textModificarStockMouseExited
+
+    private void textModificarPreciosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textModificarPreciosMouseClicked
+        f.modificarPrecios(this, productos);
+    }//GEN-LAST:event_textModificarPreciosMouseClicked
+
+    private void textModificarPreciosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textModificarPreciosMouseEntered
+        f.entrarPanel(panelModificarPrecios);
+    }//GEN-LAST:event_textModificarPreciosMouseEntered
+
+    private void textModificarPreciosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textModificarPreciosMouseExited
+        f.salirPanel(panelModificarPrecios);
+    }//GEN-LAST:event_textModificarPreciosMouseExited
+
+    private void textModificarTasaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textModificarTasaMouseClicked
+        if(f.validacion()){
+            this.tasa = validarTasa();
+        }
+    }//GEN-LAST:event_textModificarTasaMouseClicked
+
+    private void textModificarTasaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textModificarTasaMouseEntered
+        f.entrarPanel(panelModificarTasa);
+    }//GEN-LAST:event_textModificarTasaMouseEntered
+
+    private void textModificarTasaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textModificarTasaMouseExited
+        f.salirPanel(panelModificarTasa);
+    }//GEN-LAST:event_textModificarTasaMouseExited
     
     public static void main(String args[]) {
 
@@ -258,10 +384,16 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JLabel Menu;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel panelInventario;
+    private javax.swing.JPanel panelModificarPrecios;
+    private javax.swing.JPanel panelModificarStock;
+    private javax.swing.JPanel panelModificarTasa;
     private javax.swing.JPanel panelPagos;
     private javax.swing.JPanel panelRegistrarCompra;
     private javax.swing.JPanel panelSalir;
     private javax.swing.JLabel textInventario;
+    private javax.swing.JLabel textModificarPrecios;
+    private javax.swing.JLabel textModificarStock;
+    private javax.swing.JLabel textModificarTasa;
     private javax.swing.JLabel textPagos;
     private javax.swing.JLabel textRegistrarCompra;
     private javax.swing.JLabel textSalir;

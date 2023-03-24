@@ -11,6 +11,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import EDD.ListaProductos;
+import Gui.ModificarPrecios;
+import Gui.ModificarStock;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -365,16 +367,16 @@ public class Helpers {
         return montto;
     }
 
-    public void irCheckout(JFrame frame, float ttlBs, float ttlUSD, float tasa, ListaZelle listaZelle, ListaPagoMovil listaPagoMovil, Punto montoPunto, EfectivoUSD montoEfectivoUSD, EfectivoBs montoEfectivoBs, ListaProductos lista) {
+    public void irCheckout(JFrame frame, JFrame menu, float ttlBs, float ttlUSD, float tasa, ListaZelle listaZelle, ListaPagoMovil listaPagoMovil, Punto montoPunto, EfectivoUSD montoEfectivoUSD, EfectivoBs montoEfectivoBs, ListaProductos lista) {
         frame.setVisible(false);
-        Checkout checkout = new Checkout(frame, ttlBs, ttlUSD, tasa, listaZelle, listaPagoMovil, montoPunto, montoEfectivoUSD, montoEfectivoBs, lista);
+        Checkout checkout = new Checkout(frame, menu, ttlBs, ttlUSD, tasa, listaZelle, listaPagoMovil, montoPunto, montoEfectivoUSD, montoEfectivoBs, lista);
         checkout.show();
     }
 
     // VERIFICADO
-    public void registrarCompra(JFrame frame, ListaProductos lista_productos, ListaZelle listaZelle, ListaPagoMovil listaPagoMovil, Punto montoPunto, EfectivoUSD montoEfectivoUSD, EfectivoBs montoEfectivoBs) {
-        //frame.setVisible(false);
-        RegistrarCompra opcion1 = new RegistrarCompra(frame, lista_productos, listaZelle, listaPagoMovil, montoPunto, montoEfectivoUSD, montoEfectivoBs);
+    public void registrarCompra(JFrame frame, ListaProductos lista_productos, ListaZelle listaZelle, ListaPagoMovil listaPagoMovil, Punto montoPunto, EfectivoUSD montoEfectivoUSD, EfectivoBs montoEfectivoBs, float tasa) {
+        frame.setVisible(false);
+        RegistrarCompra opcion1 = new RegistrarCompra(frame, lista_productos, listaZelle, listaPagoMovil, montoPunto, montoEfectivoUSD, montoEfectivoBs, tasa);
         opcion1.show();
     }
 
@@ -387,6 +389,18 @@ public class Helpers {
     public void pagos(JFrame frame, ListaZelle listaZelle, ListaPagoMovil listaPagoMovil, Punto montoPunto, EfectivoUSD montoEfectivoUSD, EfectivoBs montoEfectivoBs) {
         frame.setVisible(false);
         Pagos opcion3 = new Pagos(frame, listaZelle, listaPagoMovil, montoPunto, montoEfectivoUSD, montoEfectivoBs);
+        opcion3.show();
+    }
+    
+    public void modificarStock(JFrame frame, ListaProductos productos) {
+        frame.setVisible(false);
+        ModificarStock opcion3 = new ModificarStock(frame, productos);
+        opcion3.show();
+    }
+    
+    public void modificarPrecios(JFrame frame, ListaProductos productos) {
+        frame.setVisible(false);
+        ModificarPrecios opcion3 = new ModificarPrecios(frame, productos);
         opcion3.show();
     }
 

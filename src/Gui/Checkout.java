@@ -18,6 +18,7 @@ public class Checkout extends javax.swing.JFrame {
     Helpers f = new Helpers();
 
     static JFrame frame;
+    static JFrame menu;
     static float ttlBs;
     static float ttlUSD;
     static float tasa;
@@ -28,11 +29,12 @@ public class Checkout extends javax.swing.JFrame {
     static EfectivoBs efectivoBs;
     static ListaProductos productos;
 
-    public Checkout(JFrame frame, float ttlBs, float ttlUSD, float tasa, ListaZelle listaZelle, ListaPagoMovil listaPagoMovil, Punto montoPunto, EfectivoUSD montoEfectivoUSD, EfectivoBs montoEfectivoBs , ListaProductos lista) {
+    public Checkout(JFrame frame, JFrame menu, float ttlBs, float ttlUSD, float tasa, ListaZelle listaZelle, ListaPagoMovil listaPagoMovil, Punto montoPunto, EfectivoUSD montoEfectivoUSD, EfectivoBs montoEfectivoBs, ListaProductos lista) {
         initComponents();
         this.setLocationRelativeTo(null);
 
         this.frame = frame;
+        this.menu = menu;
         this.montoBs.setText(Float.toString(ttlBs));
         this.montoUSD.setText(Float.toString(ttlUSD));
         this.tasa = tasa;
@@ -302,7 +304,7 @@ public class Checkout extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, " COMPRA COMPLETADA CON EXITO ");
             this.setVisible(false);
             f.escribirTxt(productos);
-            f.escribirZelles(zelles);
+            menu.setVisible(true);
         }
     }
 
@@ -321,6 +323,16 @@ public class Checkout extends javax.swing.JFrame {
     private void agregarVuelto(float cantidad) {
         this.vueltoUSD.setText(Float.toString(cantidad - Float.parseFloat(montoUSD.getText())));
         this.vueltoBs.setText(Float.toString(cantidad * tasa - Float.parseFloat(montoBs.getText())));
+        this.montoBs.setText("0");
+        this.montoUSD.setText("0");
+    }
+    
+    private void agregarVueltoBS(float cantidad) {
+        this.vueltoBs.setText(Float.toString(cantidad - Float.parseFloat(montoBs.getText())));
+        this.vueltoUSD.setText(Float.toString((cantidad/this.tasa) - Float.parseFloat(montoUSD.getText())));
+        
+        this.montoBs.setText("0");
+        this.montoUSD.setText("0");
     }
 
     private void textAtrasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textAtrasMouseEntered
@@ -378,7 +390,7 @@ public class Checkout extends javax.swing.JFrame {
             String referenciaSTR = JOptionPane.showInputDialog(null, " Ingrese la referencia del pago movil: ");
             int referencia = f.validarInt(referenciaSTR);
             if (monto > Float.parseFloat(this.montoBs.getText())) {
-                agregarVuelto(monto);
+                agregarVueltoBS(monto);
             } else {
                 float montoF = Float.parseFloat(montoBs.getText()) - monto;
                 montoUSD.setText(Float.toString(montoF / tasa));
@@ -404,7 +416,7 @@ public class Checkout extends javax.swing.JFrame {
             float monto = validarFloat();
             float deuda = Float.parseFloat(this.montoBs.getText());
             if (monto > deuda) {
-                agregarVuelto(monto);
+                agregarVueltoBS(monto);
             } else {
                 float montoF = deuda - monto;
                 montoUSD.setText(Float.toString(montoF / tasa));
@@ -452,7 +464,7 @@ public class Checkout extends javax.swing.JFrame {
         if (f.validacion()) {
             float monto = validarFloat();
             if (monto > Float.parseFloat(this.montoBs.getText())) {
-                agregarVuelto(monto);
+                agregarVueltoBS(monto);
             } else {
                 float montoF = Float.parseFloat(montoBs.getText()) - monto;
                 montoUSD.setText(Float.toString(montoF / tasa));
@@ -465,15 +477,26 @@ public class Checkout extends javax.swing.JFrame {
     }//GEN-LAST:event_textEfectivoBsMouseClicked
 
     private void textSiguienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textSiguienteMouseClicked
-        String[] array = {" No ", " Si "};
-        int opcion = JOptionPane.showOptionDialog(null, "¿HA ENTREGADO EL VUELTO COMPLETO AL CLIENTE?", "Seleciona...", 0, JOptionPane.QUESTION_MESSAGE, null, array, null);
-        if (opcion == 1) {
-            JOptionPane.showMessageDialog(null, " COMPRA COMPLETADA CON EXITO ");
-            this.setVisible(false);
-            f.escribirTxt(productos);
-        } else{
-            JOptionPane.showMessageDialog(null, " ENTREGUE EL VUELTO E INTENTE DE NUEVO ");
+        if (f.validacion()) {
+            if (Float.parseFloat(montoBs.getText()) == 0 && Float.parseFloat(montoUSD.getText()) == 0) {
+                if (Float.parseFloat(vueltoBs.getText()) == 0 && Float.parseFloat(vueltoUSD.getText()) == 0) {
+                    JOptionPane.showMessageDialog(null, " COMPRA COMPLETADA CON EXITO ");
+                } else {
+                    String[] array = {" No ", " Si "};
+                    int opcion = JOptionPane.showOptionDialog(null, "¿HA ENTREGADO EL VUELTO COMPLETO AL CLIENTE?", "Seleciona...", 0, JOptionPane.QUESTION_MESSAGE, null, array, null);
+                    if (opcion == 1) {
+                        JOptionPane.showMessageDialog(null, " COMPRA COMPLETADA CON EXITO ");
+                        this.setVisible(false);
+                        f.escribirTxt(productos);
+                    } else {
+                        JOptionPane.showMessageDialog(null, " ENTREGUE EL VUELTO E INTENTE DE NUEVO ");
+                    }
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, " ERROR! AUN HAY MONTO FALTANTE ");
+            }
         }
+
     }//GEN-LAST:event_textSiguienteMouseClicked
 
     private void textSiguienteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textSiguienteMouseEntered
@@ -511,7 +534,7 @@ public class Checkout extends javax.swing.JFrame {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Checkout(frame, ttlBs, ttlUSD, tasa, zelles, pagosMoviles, pagosPuntos, efectivoUSD, efectivoBs, productos).setVisible(true);
+                new Checkout(frame, menu, ttlBs, ttlUSD, tasa, zelles, pagosMoviles, pagosPuntos, efectivoUSD, efectivoBs, productos).setVisible(true);
             }
         });
     }

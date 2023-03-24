@@ -22,18 +22,18 @@ public class RegistrarCompra extends javax.swing.JFrame {
     static Punto pagosPuntos;
     static EfectivoUSD efectivoUSD;
     static EfectivoBs efectivoBs;
+    static float tasa;
 
     private Producto productoSeleccionado;
-    private float tasa;
 
     DefaultTableModel modelo = new DefaultTableModel();
     Helpers f = new Helpers();
 
-    public RegistrarCompra(JFrame frame, ListaProductos lista_productos, ListaZelle listaZelle, ListaPagoMovil listaPagoMovil, Punto montoPunto, EfectivoUSD montoEfectivoUSD, EfectivoBs montoEfectivoBs) {
+    public RegistrarCompra(JFrame frame, ListaProductos lista_productos, ListaZelle listaZelle, ListaPagoMovil listaPagoMovil, Punto montoPunto, EfectivoUSD montoEfectivoUSD, EfectivoBs montoEfectivoBs, float tasa) {
         initComponents();
         this.setLocationRelativeTo(null);
 
-        this.tasa = 24.20f;
+        this.tasa = tasa;
 
         this.frame = frame;
         this.productos = lista_productos;
@@ -325,6 +325,7 @@ public class RegistrarCompra extends javax.swing.JFrame {
         panelChuche6.setBackground(new java.awt.Color(195, 70, 176));
 
         botonChuche6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/chocolateLechepng.png"))); // NOI18N
+        botonChuche6.setToolTipText("");
         botonChuche6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonChuche6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -859,27 +860,32 @@ public class RegistrarCompra extends javax.swing.JFrame {
     }
 
     private void vaciar(ListaProductos lista_productos) {
-        if (carrito.getRowCount() > 0) {
-            DefaultTableModel tm = (DefaultTableModel) carrito.getModel();
-            int i = 0;
-            while (i < carrito.getRowCount()) {
-                String nombre = String.valueOf(tm.getValueAt(i, 0));
-                int cantidad = Integer.parseInt(String.valueOf(tm.getValueAt(i, 1)));
-                llenar(nombre, cantidad, lista_productos);
-                i++;
-            }
+        if (f.validacion()) {
+            if (carrito.getRowCount() > 0) {
+                DefaultTableModel tm = (DefaultTableModel) carrito.getModel();
+                int i = 0;
+                while (i < carrito.getRowCount()) {
+                    String nombre = String.valueOf(tm.getValueAt(i, 0));
+                    int cantidad = Integer.parseInt(String.valueOf(tm.getValueAt(i, 1)));
+                    llenar(nombre, cantidad, lista_productos);
+                    i++;
+                }
 
-            float ttlUSD = 0;
-            totalUSD.setText(Float.toString(ttlUSD));
-            float ttlBs = ttlUSD * tasa;
-            totalBs.setText(Float.toString(ttlBs));
-            float impuesto = ttlUSD * 0.16f;
-            IVA.setText(Float.toString(impuesto));
-            float subttl = ttlUSD - impuesto;
-            Subtotal.setText(Float.toString(subttl));
-            modelo.getDataVector().removeAllElements();
-            carrito.updateUI();
+                float ttlUSD = 0;
+                totalUSD.setText(Float.toString(ttlUSD));
+                float ttlBs = ttlUSD * tasa;
+                totalBs.setText(Float.toString(ttlBs));
+                float impuesto = ttlUSD * 0.16f;
+                IVA.setText(Float.toString(impuesto));
+                float subttl = ttlUSD - impuesto;
+                Subtotal.setText(Float.toString(subttl));
+                modelo.getDataVector().removeAllElements();
+                carrito.updateUI();
+            } else {
+                JOptionPane.showMessageDialog(null, " EL CARRITO ESTA VACIO ");
+            }
         }
+
     }
 
     private void textAtrasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textAtrasMouseEntered
@@ -891,9 +897,11 @@ public class RegistrarCompra extends javax.swing.JFrame {
     }//GEN-LAST:event_textAtrasMouseExited
 
     private void textAtrasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textAtrasMouseClicked
-        vaciar(productos);
-        this.setVisible(false);
-        this.frame.setVisible(true);
+        if (f.validacion()) {
+            vaciar(productos);
+            this.setVisible(false);
+            this.frame.setVisible(true);
+        }
     }//GEN-LAST:event_textAtrasMouseClicked
 
     private void textVaciarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textVaciarMouseEntered
@@ -916,13 +924,12 @@ public class RegistrarCompra extends javax.swing.JFrame {
     private void textCheckoutMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textCheckoutMouseExited
         f.salirBoton(textCheckout, panelCheckout);
     }//GEN-LAST:event_textCheckoutMouseExited
-
     // VERIFICADO
     private void textCheckoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textCheckoutMouseClicked
         if (Float.parseFloat(totalUSD.getText()) > 0) {
             float ttlBs = Float.parseFloat(totalBs.getText());
             float ttlUSD = Float.parseFloat(totalUSD.getText());
-            f.irCheckout(this, ttlBs, ttlUSD, tasa, zelles, pagosMoviles, pagosPuntos, efectivoUSD, efectivoBs, productos);
+            f.irCheckout(this, frame, ttlBs, ttlUSD, tasa, zelles, pagosMoviles, pagosPuntos, efectivoUSD, efectivoBs, productos);
         } else {
             JOptionPane.showMessageDialog(null, " ERROR! Debe ingreesar al menos un producto ");
         }
@@ -1023,12 +1030,10 @@ public class RegistrarCompra extends javax.swing.JFrame {
     private void botonChuche6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonChuche6MouseClicked
         if (f.validacion()) {
             String name;
-            String[] array = {" 130gr ", " 70gr ", " 30gr "};
+            String[] array = {" 130gr ", " 30gr "};
             int opcion = JOptionPane.showOptionDialog(null, "¿Cual desea?", "Seleciona...", 0, JOptionPane.QUESTION_MESSAGE, null, array, null);
-            if (opcion == 2) {
+            if (opcion == 1) {
                 name = "Chocolate de Leche 30gr";
-            } else if (opcion == 1) {
-                name = "Chocolate de Leche 70gr";
             } else {
                 name = "Chocolate de Leche 130gr";
             }
@@ -1135,7 +1140,24 @@ public class RegistrarCompra extends javax.swing.JFrame {
     }//GEN-LAST:event_botonChuche11MouseExited
 
     private void botonChuche11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonChuche11MouseClicked
-        // CAFE?
+        if (f.validacion()) {
+            String name;
+            String[] array = {" Tradicional ", " Achocolatado ", " Mocachino ", " Vainilla ", " Capuchino "};
+            int opcion = JOptionPane.showOptionDialog(null, "¿Cual desea?", "Seleciona...", 0, JOptionPane.QUESTION_MESSAGE, null, array, null);
+            if (opcion == 0) {
+                name = "Nescafe Tradicional";
+            } else if (opcion == 1) {
+                name = "Nescafe Achocolatado";
+            } else if (opcion == 2) {
+                name = "Nescafe Mocachino";
+            } else if (opcion == 3) {
+                name = "Nescafe Vainilla";
+            } else {
+                name = "Nescafe Capuchino";
+            }
+            seleccionProducto(name, productos);
+        }
+
     }//GEN-LAST:event_botonChuche11MouseClicked
 
     private void botonChuche12MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonChuche12MouseEntered
@@ -1203,18 +1225,14 @@ public class RegistrarCompra extends javax.swing.JFrame {
     private void botonChuche15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonChuche15MouseClicked
         if (f.validacion()) {
             String name;
-            String[] array = {" Nescafe Mocachino ", " Nescafe Vainilla ", " Nescafe Capuchino ", " Nescafe Achocolatado ", " Nescafe Tradicional "};
+            String[] array = {" Merei ", " Galletas Craqueladas ", " Chocolate Duo "};
             int opcion = JOptionPane.showOptionDialog(null, "¿Cual desea?", "Seleciona...", 0, JOptionPane.QUESTION_MESSAGE, null, array, null);
             if (opcion == 0) {
-                name = "Nescafe Mocachino";
+                name = "Merei";
             } else if (opcion == 1) {
-                name = "Nescafe Vainilla";
-            } else if (opcion == 2) {
-                name = "Nescafe Capuchino";
-            } else if (opcion == 3) {
-                name = "Nescafe Achocolatado";
+                name = "Galletas Craqueladas";
             } else {
-                name = "Nescafe Tradicional";
+                name = "Chocolate Duo";
             }
             seleccionProducto(name, productos);
         }
@@ -1247,7 +1265,7 @@ public class RegistrarCompra extends javax.swing.JFrame {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new RegistrarCompra(frame, productos, zelles, pagosMoviles, pagosPuntos, efectivoUSD, efectivoBs).setVisible(true);
+                new RegistrarCompra(frame, productos, zelles, pagosMoviles, pagosPuntos, efectivoUSD, efectivoBs, tasa).setVisible(true);
             }
         });
     }
