@@ -12,6 +12,7 @@ import EDD.PagoMovil;
 import EDD.Punto;
 import EDD.Zelle;
 import javax.swing.JFrame;
+import Gui.Menu;
 
 public class Checkout extends javax.swing.JFrame {
 
@@ -300,12 +301,11 @@ public class Checkout extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void finalizar() {
-        if (Float.parseFloat(vueltoBs.getText()) == 0 && Float.parseFloat(montoBs.getText()) == 0) {
-            JOptionPane.showMessageDialog(null, " COMPRA COMPLETADA CON EXITO ");
-            this.setVisible(false);
-            f.escribirTxt(productos);
-            menu.setVisible(true);
-        }
+        JOptionPane.showMessageDialog(null, " COMPRA COMPLETADA CON EXITO ");
+        this.setVisible(false);
+        f.escribirTxt(productos);
+        Menu mnu = new Menu();
+        mnu.setVisible(true);
     }
 
     private float validarFloat() {
@@ -323,14 +323,15 @@ public class Checkout extends javax.swing.JFrame {
     private void agregarVuelto(float cantidad) {
         this.vueltoUSD.setText(Float.toString(cantidad - Float.parseFloat(montoUSD.getText())));
         this.vueltoBs.setText(Float.toString(cantidad * tasa - Float.parseFloat(montoBs.getText())));
+        
         this.montoBs.setText("0");
         this.montoUSD.setText("0");
     }
-    
+
     private void agregarVueltoBS(float cantidad) {
         this.vueltoBs.setText(Float.toString(cantidad - Float.parseFloat(montoBs.getText())));
-        this.vueltoUSD.setText(Float.toString((cantidad/this.tasa) - Float.parseFloat(montoUSD.getText())));
-        
+        this.vueltoUSD.setText(Float.toString((cantidad / this.tasa) - Float.parseFloat(montoUSD.getText())));
+
         this.montoBs.setText("0");
         this.montoUSD.setText("0");
     }
@@ -360,19 +361,23 @@ public class Checkout extends javax.swing.JFrame {
     private void textZelleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textZelleMouseClicked
         if (f.validacion()) {
             float monto = validarFloat();
+            float deuda = Float.parseFloat(this.montoUSD.getText());
+
             String nombre = JOptionPane.showInputDialog(null, " Ingrese el nombre de la persona que envia: ");
             String nro = JOptionPane.showInputDialog(null, " Ingrese el codigo de confirmacion de la transferencia: ");
-            if (monto > Float.parseFloat(this.montoUSD.getText())) {
+
+            if (monto > deuda) {
                 agregarVuelto(monto);
+            } else if (monto == deuda) {
+                finalizar();
             } else {
-                float montoF = Float.parseFloat(montoUSD.getText()) - monto;
-                montoUSD.setText(Float.toString(montoF));
-                montoBs.setText(Float.toString(montoF * tasa));
+                float montoFinal = Float.parseFloat(montoUSD.getText()) - monto;
+                montoUSD.setText(Float.toString(montoFinal));
+                montoBs.setText(Float.toString(montoFinal * tasa));
             }
             Zelle zelle = new Zelle(monto, nombre, nro);
             zelles.agregar(true, zelle);
             f.escribirZelles(zelles);
-            finalizar();
         }
     }//GEN-LAST:event_textZelleMouseClicked
 
@@ -387,11 +392,18 @@ public class Checkout extends javax.swing.JFrame {
     private void textPagoMovilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textPagoMovilMouseClicked
         if (f.validacion()) {
             float monto = validarFloat();
+            float deuda = Float.parseFloat(this.montoBs.getText());
+            
             String referenciaSTR = JOptionPane.showInputDialog(null, " Ingrese la referencia del pago movil: ");
+            
             int referencia = f.validarInt(referenciaSTR);
-            if (monto > Float.parseFloat(this.montoBs.getText())) {
+            
+            if (monto > deuda) {
                 agregarVueltoBS(monto);
-            } else {
+            }else if(monto == deuda){
+                finalizar();
+            } 
+            else {
                 float montoF = Float.parseFloat(montoBs.getText()) - monto;
                 montoUSD.setText(Float.toString(montoF / tasa));
                 montoBs.setText(Float.toString(montoF));
@@ -399,7 +411,6 @@ public class Checkout extends javax.swing.JFrame {
             PagoMovil pagoMovil = new PagoMovil(monto, referencia);
             pagosMoviles.agregar(true, pagoMovil);
             f.escribirPagosMoviles(pagosMoviles);
-            finalizar();
         }
     }//GEN-LAST:event_textPagoMovilMouseClicked
 
@@ -417,14 +428,15 @@ public class Checkout extends javax.swing.JFrame {
             float deuda = Float.parseFloat(this.montoBs.getText());
             if (monto > deuda) {
                 agregarVueltoBS(monto);
-            } else {
+            }else if(monto == deuda){
+                finalizar();
+            }else{
                 float montoF = deuda - monto;
                 montoUSD.setText(Float.toString(montoF / tasa));
                 montoBs.setText(Float.toString(montoF));
             }
             pagosPuntos.setMonto(pagosPuntos.getMonto() + monto);
             f.escribirPunto(pagosPuntos);
-            finalizar();
         }
     }//GEN-LAST:event_textPuntoMouseClicked
 
@@ -439,16 +451,18 @@ public class Checkout extends javax.swing.JFrame {
     private void textEfectivoUSDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textEfectivoUSDMouseClicked
         if (f.validacion()) {
             float monto = validarFloat();
-            if (monto > Float.parseFloat(this.montoUSD.getText())) {
+            float deuda = Float.parseFloat(this.montoUSD.getText());
+            if (monto > deuda) {
                 agregarVuelto(monto);
-            } else {
+            }else if(monto == deuda){
+                finalizar();
+            }else {
                 float montoF = Float.parseFloat(montoUSD.getText()) - monto;
                 montoUSD.setText(Float.toString(montoF));
                 montoBs.setText(Float.toString(montoF * tasa));
             }
             efectivoUSD.setMonto(efectivoUSD.getMonto() + monto);
             f.escribirEfectivoUSD(efectivoUSD);
-            finalizar();
         }
     }//GEN-LAST:event_textEfectivoUSDMouseClicked
 
@@ -463,8 +477,12 @@ public class Checkout extends javax.swing.JFrame {
     private void textEfectivoBsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textEfectivoBsMouseClicked
         if (f.validacion()) {
             float monto = validarFloat();
-            if (monto > Float.parseFloat(this.montoBs.getText())) {
+            float deuda = Float.parseFloat(this.montoBs.getText());
+            
+            if (monto > deuda) {
                 agregarVueltoBS(monto);
+            }else if(monto == deuda){
+                finalizar();
             } else {
                 float montoF = Float.parseFloat(montoBs.getText()) - monto;
                 montoUSD.setText(Float.toString(montoF / tasa));
@@ -472,7 +490,6 @@ public class Checkout extends javax.swing.JFrame {
             }
             efectivoBs.setMonto(efectivoBs.getMonto() + monto);
             f.escribirEfectivoBs(efectivoBs);
-            finalizar();
         }
     }//GEN-LAST:event_textEfectivoBsMouseClicked
 
@@ -486,13 +503,12 @@ public class Checkout extends javax.swing.JFrame {
                     int opcion = JOptionPane.showOptionDialog(null, "¿HA ENTREGADO EL VUELTO COMPLETO AL CLIENTE?", "Seleciona...", 0, JOptionPane.QUESTION_MESSAGE, null, array, null);
                     if (opcion == 1) {
                         JOptionPane.showMessageDialog(null, " COMPRA COMPLETADA CON EXITO ");
-                        this.setVisible(false);
-                        f.escribirTxt(productos);
+                        finalizar();
                     } else {
                         JOptionPane.showMessageDialog(null, " ENTREGUE EL VUELTO E INTENTE DE NUEVO ");
                     }
                 }
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, " ERROR! AUN HAY MONTO FALTANTE ");
             }
         }

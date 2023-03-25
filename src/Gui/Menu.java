@@ -40,7 +40,7 @@ public class Menu extends javax.swing.JFrame {
         this.montoPunto = f.leerPunto();
         this.montoEfectivoUSD = f.leerEfectivoUSD();
         this.montoEfectivoBs = f.leerEfectivoBs();
-        this.tasa = 24.20f;
+        this.tasa = 24.40f;
 //        productos.print();
     }
 

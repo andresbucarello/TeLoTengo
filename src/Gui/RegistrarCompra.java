@@ -1225,15 +1225,20 @@ public class RegistrarCompra extends javax.swing.JFrame {
     private void botonChuche15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonChuche15MouseClicked
         if (f.validacion()) {
             String name;
-            String[] array = {" Merei ", " Galletas Craqueladas ", " Chocolate Duo "};
+            String[] array = {" Merei ", " Galletas Craqueladas ", " Chocolate Duo ", " Refrescos "," Agua "};
             int opcion = JOptionPane.showOptionDialog(null, "¿Cual desea?", "Seleciona...", 0, JOptionPane.QUESTION_MESSAGE, null, array, null);
             if (opcion == 0) {
                 name = "Merei";
             } else if (opcion == 1) {
                 name = "Galletas Craqueladas";
-            } else {
+            } else if(opcion == 2) {
                 name = "Chocolate Duo";
+            }else if (opcion == 3){
+                name = "Refrescos";    
+            }else{
+                name = "Agua";    
             }
+            
             seleccionProducto(name, productos);
         }
     }//GEN-LAST:event_botonChuche15MouseClicked

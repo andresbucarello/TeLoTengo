@@ -1,31 +1,33 @@
-Doritos,197,5
-Chesee Tris,110,5
-Pepito,108,5
-De Todito,18,5
-Platanitos,18,6
-Big Bom,1024,1
-Trululu,48,3
-Chocolate de Leche 30gr,288,3
-Chocolate de Leche 130gr,20,6
-Cri-Cri 27gr,288,3
-Cri-Cri 123gr,20,6
+Doritos,191,4
+Chesee Tris,108,4
+Pepito,104,3
+De Todito,14,4
+Platanitos,14,5
+Big Bom,1009,1
+Trululu,34,3
+Chocolate de Leche 30gr,283,3
+Chocolate de Leche 130gr,18,5
+Cri-Cri 27gr,287,3
+Cri-Cri 123gr,20,5
 Rikiti 30gr,36,3
-Rikiti 130gr,20,6
-Galak 30gr,34,3
-Galak 130gr,20,6
+Rikiti 130gr,20,5
+Galak 30gr,33,3
+Galak 130gr,20,5
 Carre Avellana 25gr,48,3
-Samba 32gr,320,3
-Cocosette maxi,216,3
-Susy maxi,216,3
-Pringle Original,70,6
-Pringle Queso,28,6
-Pringle Crema y Cebolla,14,6
-Merei,35,3
+Samba 32gr,310,3
+Cocosette maxi,209,3
+Susy maxi,203,3
+Pringle Original,64,6
+Pringle Queso,26,6
+Pringle Crema y Cebolla,8,6
+Merei,34,3
 Galletas Craqueladas,160,2
 Chocolate Duo,5,6
-Nescafe Mocachino,210,4
-Nescafe Vainilla,210,4
-Nescafe Capuchino,210,4
-Nescafe Achocolatado,210,4
-Nescafe Tradicional,210,4
+Nescafe Mocachino,205,4
+Nescafe Vainilla,206,4
+Nescafe Capuchino,208,4
+Nescafe Achocolatado,208,4
+Nescafe Tradicional,206,4
 Oreo Americana,0,2
+Refrescos,10,3
+Agua,0,2
